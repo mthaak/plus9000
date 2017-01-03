@@ -28,17 +28,15 @@ public class Main extends Application {
         primaryStage.setHeight(768);
         BorderPane root = FXMLLoader.load(getClass().getResource("main.fxml"));
 
+        LineChart lineChart = new LineChart();
+        ChartViewer lineChartViewer = new ChartViewer(lineChart.getChart());
+        lineChartViewer.addChartMouseListener(lineChart);
+
         CandlestickChart candlestickChart = new CandlestickChart();
         ChartViewer candleStickChartViewer = new ChartViewer(candlestickChart.getChartChart());
         candleStickChartViewer.addChartMouseListener(candlestickChart);
 
-        LineChart lineChart = new LineChart();
-        ChartViewer lineChartViewer = new ChartViewer(lineChart.getChart());
-        candleStickChartViewer.addChartMouseListener(lineChart);
-
-        StockSelector stockSelector = new StockSelector();
-        stockSelector.setCandleStickChart(candlestickChart);
-        stockSelector.setLineChart(lineChart);
+        StockSelector stockSelector = new StockSelector(lineChart, candlestickChart);
         root.setLeft(stockSelector);
 
         VBox plots = (VBox) root.lookup("#plots");
