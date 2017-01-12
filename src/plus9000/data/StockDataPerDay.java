@@ -48,6 +48,12 @@ public class StockDataPerDay {
         }
     }
 
+    public static StockDataPerDay loadedFromFile(String filePath){
+        StockDataPerDay stockDataPerDay = new StockDataPerDay();
+        stockDataPerDay.loadFromFile(filePath);
+        return stockDataPerDay;
+    }
+
     public int numDays() {
         return stockDataPerDay.size();
     }

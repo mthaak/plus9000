@@ -1,16 +1,21 @@
 package plus9000;
 
 import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.jfree.chart.fx.ChartViewer;
 import plus9000.gui.CandlestickChart;
 import plus9000.gui.LineChart;
 import plus9000.gui.StockSelector;
 
+import java.beans.EventHandler;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,11 +35,12 @@ public class Main extends Application {
 
         LineChart lineChart = new LineChart();
         ChartViewer lineChartViewer = new ChartViewer(lineChart.getChart());
+//        lineChartViewer.setMinWidth(1000);
         lineChartViewer.addChartMouseListener(lineChart);
 
         CandlestickChart candlestickChart = new CandlestickChart();
         ChartViewer candleStickChartViewer = new ChartViewer(candlestickChart.getChartChart());
-        candleStickChartViewer.addChartMouseListener(candlestickChart);
+//        candleStickChartViewer.setMinWidth(1000);
 
         StockSelector stockSelector = new StockSelector(lineChart, candlestickChart);
         root.setLeft(stockSelector);

@@ -1,5 +1,6 @@
 package plus9000.gui;
 
+import javafx.scene.input.MouseEvent;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
@@ -10,7 +11,6 @@ import org.jfree.chart.fx.interaction.ChartMouseEventFX;
 import org.jfree.chart.fx.interaction.ChartMouseListenerFX;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.data.xy.OHLCDataset;
 import plus9000.data.StockDataPerDay;
 import plus9000.data.StockDataPerDayAdapter;
 
@@ -21,15 +21,17 @@ import java.util.Date;
  * Plus9000
  * Created by Martin on 18-12-2016.
  */
-public class CandlestickChart implements ChartMouseListenerFX {
+public class CandlestickChart {
     private JFreeChart chart;
+    private StockDataPerDayAdapter dataset;
+    private boolean hasFocus;
 
     public CandlestickChart() {
-        OHLCDataset dataset = this.createDataset("aapl"); // use Apple by default
+        this.dataset = this.createDataset();
 
         this.chart = ChartFactory.createCandlestickChart(
                 "Stock OHLC price per day", "date",
-                "price ($)", dataset, false);
+                "price ($)", this.dataset, true);
         this.chart.setBackgroundPaint(Color.white);
         XYPlot plot = this.chart.getXYPlot();
         DateAxis dateAxis = (DateAxis) plot.getDomainAxis();
@@ -49,31 +51,56 @@ public class CandlestickChart implements ChartMouseListenerFX {
 
         XYItemRenderer renderer = (XYItemRenderer) plot.getRenderer();
         renderer.setSeriesPaint(0, (new Color(50, 50, 50)));
+
+        plot.setDomainPannable(true);
+        plot.setRangePannable(true);
+
+        this.hasFocus = true;
     }
 
     public JFreeChart getChartChart() {
         return this.chart;
     }
 
-    public void changeStock(String symbol) {
-        OHLCDataset dataset = this.createDataset(symbol);
-        XYPlot plot = this.chart.getXYPlot();
-        plot.setDataset(dataset);
+    public void setFocus(String stockSymbol){
+        this.dataset.setFocus(stockSymbol);
+        this.hasFocus = true;
     }
 
-    private OHLCDataset createDataset(String symbol) {
-        StockDataPerDay stocks = new StockDataPerDay();
-        stocks.loadFromFile("data/" + symbol + ".csv");
-
-        OHLCDataset adapter = new StockDataPerDayAdapter(stocks);
-        return adapter;
+    public void unfocus(){
+        // TODO
+        this.hasFocus = false;
     }
 
-    @Override
-    public void chartMouseClicked(ChartMouseEventFX event) {
+    public void show(String stockSymbol){
+     this.dataset.show(stockSymbol);
     }
 
-    @Override
-    public void chartMouseMoved(ChartMouseEventFX event) {
+    public void hide(String stockSymbol){
+        this.dataset.hide(stockSymbol);
     }
+
+    public void showAll(){
+        this.dataset.showAll();
+    }
+
+    public void hideAll(){
+        this.hideAll();
+    }
+
+    private StockDataPerDayAdapter createDataset() {
+        StockDataPerDayAdapter dataset = new StockDataPerDayAdapter();
+        dataset.add("aapl", StockDataPerDay.loadedFromFile("data/aapl.csv"));
+        dataset.add("amzn", StockDataPerDay.loadedFromFile("data/amzn.csv"));
+        dataset.add("bac", StockDataPerDay.loadedFromFile("data/bac.csv"));
+        dataset.add("fb", StockDataPerDay.loadedFromFile("data/fb.csv"));
+        dataset.add("ge", StockDataPerDay.loadedFromFile("data/ge.csv"));
+        dataset.add("googl", StockDataPerDay.loadedFromFile("data/googl.csv"));
+        dataset.add("intc", StockDataPerDay.loadedFromFile("data/intc.csv"));
+        dataset.add("jnj", StockDataPerDay.loadedFromFile("data/jnj.csv"));
+        dataset.add("msft", StockDataPerDay.loadedFromFile("data/msft.csv"));
+        dataset.add("xom", StockDataPerDay.loadedFromFile("data/xom.csv"));
+        return dataset;
+    }
+
 }
