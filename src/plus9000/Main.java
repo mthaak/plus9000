@@ -1,16 +1,21 @@
 package plus9000;
 
 import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.jfree.chart.fx.ChartViewer;
 import plus9000.gui.CandlestickChart;
 import plus9000.gui.LineChart;
 import plus9000.gui.StockSelector;
 
+import java.beans.EventHandler;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,17 +33,16 @@ public class Main extends Application {
         primaryStage.setHeight(768);
         BorderPane root = FXMLLoader.load(getClass().getResource("main.fxml"));
 
-        CandlestickChart candlestickChart = new CandlestickChart();
-        ChartViewer candleStickChartViewer = new ChartViewer(candlestickChart.getChartChart());
-        candleStickChartViewer.addChartMouseListener(candlestickChart);
-
         LineChart lineChart = new LineChart();
         ChartViewer lineChartViewer = new ChartViewer(lineChart.getChart());
-        candleStickChartViewer.addChartMouseListener(lineChart);
+//        lineChartViewer.setMinWidth(1000);
+        lineChartViewer.addChartMouseListener(lineChart);
 
-        StockSelector stockSelector = new StockSelector();
-        stockSelector.setCandleStickChart(candlestickChart);
-        stockSelector.setLineChart(lineChart);
+        CandlestickChart candlestickChart = new CandlestickChart();
+        ChartViewer candleStickChartViewer = new ChartViewer(candlestickChart.getChartChart());
+//        candleStickChartViewer.setMinWidth(1000);
+
+        StockSelector stockSelector = new StockSelector(lineChart, candlestickChart);
         root.setLeft(stockSelector);
 
         VBox plots = (VBox) root.lookup("#plots");
