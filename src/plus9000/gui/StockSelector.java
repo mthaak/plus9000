@@ -17,8 +17,11 @@ import java.util.List;
 import java.util.Map;
 
 public class StockSelector extends VBox {
+    List<StockSelectorListener> listeners;
 
-    public StockSelector(final LineChart lineChart, final CandlestickChart candleStickChart) {
+    public StockSelector() {
+        this.listeners = new ArrayList<>();
+
         Label label = new Label("American stocks");
         this.getChildren().add(label);
 
@@ -34,43 +37,64 @@ public class StockSelector extends VBox {
         stocks.add(new CheckedStock("Microsoft", "msft", new SimpleBooleanProperty(false)));
         stocks.add(new CheckedStock("Exxon Mobil", "xom", new SimpleBooleanProperty(false)));
 
-
-
         final ListView<CheckedStock> listView = new ListView();
         listView.setItems(FXCollections.observableArrayList(stocks));
-//        listView.setFocusTraversable(false);
-//        listView.getSelectionModel().clearSelection(); // select nothing
-//        listView.getSelectionModel().select(0); // select first (Apple)
-        candleStickChart.show("aapl"); // show Apple by default
 
-        // Set checkbox enable/disable listener
-        listView.setCellFactory(CheckBoxListCell.forListView(new Callback<CheckedStock, ObservableValue<Boolean>>() {
-            @Override
-            public ObservableValue<Boolean> call(CheckedStock stock) {
-                stock.getCheckedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-                            if (!wasSelected && isNowSelected)
-                                candleStickChart.show(stock.getSymbol());
-                            else if (wasSelected && !isNowSelected)
-                                candleStickChart.hide(stock.getSymbol());
-                        }
-                );
-                return stock.getCheckedProperty();
-            }
-        }));
 
-        // Set select listener
+        // Set stock focused listener
         listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CheckedStock>() {
             @Override
             public void changed(ObservableValue<? extends CheckedStock> observableValue, CheckedStock oldStock, CheckedStock newStock) {
                 if (oldStock != null) // if some other stock was selected
                     oldStock.getCheckedProperty().setValue(false);
                 newStock.getCheckedProperty().setValue(true);
-                candleStickChart.setFocus(newStock.getSymbol());
+                notifyListenersStockFocused(newStock.getSymbol());
             }
         });
 
+        // Set stock checked/unchecked listener
+        listView.setCellFactory(CheckBoxListCell.forListView(new Callback<CheckedStock, ObservableValue<Boolean>>() {
+            @Override
+            public ObservableValue<Boolean> call(CheckedStock stock) {
+                stock.getCheckedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+                            if (!wasSelected && isNowSelected)
+                                notifyListenersStockChecked(stock.getSymbol());
+                            else if (wasSelected && !isNowSelected)
+                                notifyListenersStockUnchecked(stock.getSymbol());
+                        }
+                );
+                return stock.getCheckedProperty();
+            }
+        }));
+
+
+
         this.getChildren().add(listView);
     }
+
+    public void addListener(StockSelectorListener listener){
+        this.listeners.add(listener);
+    }
+
+    private void notifyListenersStockFocused(String symbol){
+        for (StockSelectorListener listener : this.listeners){
+            listener.stockFocused(symbol);
+        }
+    }
+
+    private void notifyListenersStockChecked(String symbol){
+        for (StockSelectorListener listener : this.listeners){
+            listener.stockChecked(symbol);
+        }
+    }
+
+    private void notifyListenersStockUnchecked(String symbol){
+        for (StockSelectorListener listener : this.listeners){
+            listener.stockUnchecked(symbol);
+        }
+    }
+
+
 }
 
 class CheckedStock{

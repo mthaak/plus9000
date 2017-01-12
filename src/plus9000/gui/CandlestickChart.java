@@ -88,6 +88,24 @@ public class CandlestickChart {
         this.hideAll();
     }
 
+    public void setPeriod(String period){
+        if (period.equals("day")){
+
+        } else if (period.equals("week")){
+
+        } else if (period.equals("month")){
+
+        } else if (period.equals("year")){
+
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public void resetZoom(){
+
+    }
+
     private StockDataPerDayAdapter createDataset() {
         StockDataPerDayAdapter dataset = new StockDataPerDayAdapter();
         dataset.add("aapl", StockDataPerDay.loadedFromFile("data/aapl.csv"));
