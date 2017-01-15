@@ -56,9 +56,7 @@ public class StockDataPerTickRTAdapter implements XYDataset {
 
         // Notify change listeners
         if (datasetChanged) {
-            for (DatasetChangeListener changeListener : this.changeListeners) {
-                changeListener.datasetChanged(new DatasetChangeEvent(this, this));
-            }
+            this.notifyListeners();
         }
     }
 
@@ -68,6 +66,9 @@ public class StockDataPerTickRTAdapter implements XYDataset {
 
     public void setRange(long range) {
         this.range = range;
+        // Update lower bound
+        this.lowerBoundIndex = indexForTime(new Date(this.currentTime.getTime() - range)) - 1;
+        this.notifyListeners();
     }
 
     private int indexForTime(Date time) {
@@ -81,6 +82,12 @@ public class StockDataPerTickRTAdapter implements XYDataset {
             return 0;
     }
 
+    private void notifyListeners() {
+        for (DatasetChangeListener changeListener : this.changeListeners) {
+            changeListener.datasetChanged(new DatasetChangeEvent(this, this));
+        }
+    }
+
     @Override
     public DomainOrder getDomainOrder() {
         return null;
@@ -88,7 +95,10 @@ public class StockDataPerTickRTAdapter implements XYDataset {
 
     @Override
     public int getItemCount(int i) {
-        return this.upperBoundIndex - lowerBoundIndex; // dynamic
+        if (i == 0)
+            return this.upperBoundIndex - lowerBoundIndex + 1; // dynamic
+        else // if i == 1
+            return 3;
     }
 
     @Override
@@ -98,7 +108,21 @@ public class StockDataPerTickRTAdapter implements XYDataset {
 
     @Override
     public double getXValue(int i, int i1) {
-        return (double) this.stockDataPerTick.getTime(i1 + lowerBoundIndex).getTime();
+        if (i == 0)
+            if (i1 == this.upperBoundIndex - lowerBoundIndex) // last item
+                return this.currentTime.getTime();
+            else
+                return (double) this.stockDataPerTick.getTime(i1 + lowerBoundIndex).getTime();
+        else { // current price line
+            double xLineStart = this.stockDataPerTick.getTime(lowerBoundIndex).getTime();
+            double xLineEnd = this.stockDataPerTick.getTime(upperBoundIndex).getTime();
+            if (i1 == 0)
+                return xLineStart;
+            else if (i1 == 1)
+                return xLineStart + (xLineEnd - xLineStart) * 0.1; // right of line start
+            else // if i1 == 2
+                return xLineEnd;
+        }
     }
 
     @Override
@@ -108,22 +132,29 @@ public class StockDataPerTickRTAdapter implements XYDataset {
 
     @Override
     public double getYValue(int i, int i1) {
-        return this.stockDataPerTick.getPrice(i1 + lowerBoundIndex);
+        if (i == 0)
+            if (i1 == this.upperBoundIndex - lowerBoundIndex) // last item
+                return this.stockDataPerTick.getPrice(upperBoundIndex - 1);
+            else
+                return this.stockDataPerTick.getPrice(i1 + lowerBoundIndex);
+        else { // current price line
+            return this.stockDataPerTick.getPrice(upperBoundIndex - 1); // straight line
+        }
     }
 
     @Override
     public int getSeriesCount() {
-        return 1;
+        return 2;
     }
 
     @Override
     public Comparable getSeriesKey(int i) {
-        return "Stock price per tick";
+        return i;
     }
 
     @Override
     public int indexOf(Comparable comparable) {
-        return 1;
+        return (int) comparable;
     }
 
     @Override

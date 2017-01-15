@@ -47,7 +47,7 @@ public class StockDataPerTick {
             scanner.close();
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            // ignore file
         }
     }
 

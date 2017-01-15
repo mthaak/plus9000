@@ -30,9 +30,7 @@ public class CandlestickChart {
     public CandlestickChart() {
         this.dataset = OHLCDataCollection.loadedFromFiles();
 
-        this.chart = ChartFactory.createCandlestickChart(
-                "", "",
-                "price ($)", this.dataset, true);
+        this.chart = ChartFactory.createCandlestickChart("", "", "price ($)", this.dataset, true);
 
         ((CandlestickRenderer) this.chart.getXYPlot().getRenderer()).setAutoWidthFactor(1000); // very high such that we always use max width
         this.setFocus("aapl"); // focus Apple by default
@@ -40,7 +38,7 @@ public class CandlestickChart {
         this.resetZoom();
     }
 
-    public JFreeChart getChartChart() {
+    public JFreeChart getChart() {
         return this.chart;
     }
 
@@ -95,7 +93,7 @@ public class CandlestickChart {
         CandlestickRenderer renderer = (CandlestickRenderer) this.chart.getXYPlot().getRenderer();
         Period period = this.dataset.getPeriod();
         if (period == Period.DAY) {
-            dateAxis.setRange(new Date(116, 11, 1), new Date(117, 0, 1)); // show last month
+            dateAxis.setRange(new Date(116, 11, 1), new Date(116, 11, 15)); // show last month
         } else if (period == Period.WEEK) {
             dateAxis.setRange(new Date(116, 6, 1), new Date(117, 0, 1)); // show last half year
         } else if (period == Period.MONTH) {
@@ -140,6 +138,8 @@ public class CandlestickChart {
             dateAxis.setDateFormatOverride(new SimpleDateFormat("dd-MMM-yy"));
 
             renderer.setMaxCandleWidthInMilliseconds(64800000d); // 3/4 day
+
+            this.chart.getLegend().setMargin(0, 0, 5, 0);
         } else if (period == Period.WEEK) {
             tickUnits.add(new DateTickUnit(DateTickUnitType.DAY, 7));
             tickUnits.add(new DateTickUnit(DateTickUnitType.DAY, 14));
@@ -152,6 +152,8 @@ public class CandlestickChart {
             dateAxis.setDateFormatOverride(new SimpleDateFormat("dd-MMM-yy\n('week' ww)"));
 
             renderer.setMaxCandleWidthInMilliseconds(453600000d); // 3/4 week
+
+            this.chart.getLegend().setMargin(15, 0, 5, 0);
         } else if (period == Period.MONTH) {
             tickUnits.add(new DateTickUnit(DateTickUnitType.MONTH, 1));
             tickUnits.add(new DateTickUnit(DateTickUnitType.MONTH, 3));
@@ -163,6 +165,8 @@ public class CandlestickChart {
             dateAxis.setDateFormatOverride(new SimpleDateFormat("MMM\nyyyy"));
 
             renderer.setMaxCandleWidthInMilliseconds(2008800000d); // 3/4 month
+
+            this.chart.getLegend().setMargin(15, 0, 5, 0);
         } else if (period == Period.YEAR) {
             tickUnits.add(new DateTickUnit(DateTickUnitType.YEAR, 1));
             tickUnits.add(new DateTickUnit(DateTickUnitType.YEAR, 5));
@@ -171,6 +175,8 @@ public class CandlestickChart {
             dateAxis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
 
             renderer.setMaxCandleWidthInMilliseconds(23716800000d); // 3/4 year
+
+            this.chart.getLegend().setMargin(0, 0, 5, 0);
         }
     }
 }

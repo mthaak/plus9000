@@ -1,16 +1,21 @@
-- read data from file / read data from api
-- candlestick chart
-- linechart
-- stock selection menu
-- time period selection
 - linking between visualisations
-- reset chart option
-- tijd niet resetten wanneer tussen stocks wordt gewisseld
-- tooltips charts
-- range en beginpunt linechart aanpassen
-- range en beginpunt candlestick chart aanpassen
-- linechart show current price
-- linechart average over minute / 30 minutes
-- linechart average over one week
-- reset zoom
-- multiple series in one plot and select/deselect which ones
+
+### STOCK SELECTOR ###
+- meer stocks van verschillende exchanges in tabbed view
+- bugs oplossen tussen stockselector en candlestick
+
+### CANDLESTICK ###
+- pannen?
+- tooltips?
+- weken duidelijker alignen
+- zorgen dat lijnen niet telkens van kleur veranderen
+
+### LINECHART ###
+- linechart average per minute, average per uur
+- pannen?
+- tooltips?
+- stockdata refatoren?
+
+### MYSTERY CHART ###
+- tooltips
+- good data

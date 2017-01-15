@@ -18,7 +18,7 @@ public class CandlestickChartPanel extends VBox implements StockSelectorListener
     public CandlestickChartPanel() {
         this.candlestickChart = new CandlestickChart();
         this.candlestickChart.show("aapl"); // show Apple by default
-        ChartViewer viewer = new ChartViewer(candlestickChart.getChartChart());
+        ChartViewer viewer = new ChartViewer(candlestickChart.getChart());
 
         Button perDayButton = new Button("Per day");
         perDayButton.setOnAction(new EventHandler<ActionEvent>() {
