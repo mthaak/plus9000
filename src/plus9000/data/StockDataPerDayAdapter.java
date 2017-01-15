@@ -1,19 +1,16 @@
 package plus9000.data;
 
-import org.jfree.chart.axis.DateTickUnit;
 import org.jfree.data.DomainOrder;
 import org.jfree.data.general.DatasetChangeEvent;
 import org.jfree.data.general.DatasetChangeListener;
 import org.jfree.data.general.DatasetGroup;
 import org.jfree.data.xy.OHLCDataset;
 
-import java.text.ParseException;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Plus9000
@@ -29,7 +26,7 @@ public class StockDataPerDayAdapter implements OHLCDataset {
         this.stocks = new HashMap();
         this.visibleStocks = new ArrayList();
         this.changeListeners = new ArrayList();
-        this.period = new Period();
+//        this.period = new Period();
     }
 
     /**
@@ -110,11 +107,11 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     @Override
     public double getHighValue(int i, int i1) {
-        if (this.period == TimeUnit.DAYS) {
+//        if (this.period == TimeUnit.DAYS) {
             return this.stocks.get(this.visibleStocks.get(i)).getHighPrice(i1);
-        } else if (this.period == TimeUnit.){
-
-        }
+//        } else if (this.period == TimeUnit.){
+//
+//        }
     }
 
     @Override

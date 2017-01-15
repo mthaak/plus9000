@@ -1,13 +1,15 @@
 package plus9000;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.jfree.chart.fx.ChartViewer;
-import plus9000.gui.CandlestickChartViewer;
+import plus9000.gui.CandlestickChartPanel;
 import plus9000.gui.LineChart;
 import plus9000.gui.StockSelector;
 
@@ -18,11 +20,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        int i;
-        for (i = 0; i < 0; i++) {
-            System.out.println(i);
-        }
-
         primaryStage.setTitle("Plus9000");
         primaryStage.setWidth(1024);
         primaryStage.setHeight(768);
@@ -30,30 +27,34 @@ public class Main extends Application {
 
         LineChart lineChart = new LineChart();
         ChartViewer lineChartViewer = new ChartViewer(lineChart.getChart());
-//        lineChartViewer.setMinWidth(1000);
         lineChartViewer.addChartMouseListener(lineChart);
 
-        CandlestickChartViewer candlestickChartViewer = new CandlestickChartViewer();
+        CandlestickChartPanel candlestickChartPanel = new CandlestickChartPanel();
 
         StockSelector stockSelector = new StockSelector();
+        stockSelector.addListener(candlestickChartPanel);
         root.setLeft(stockSelector);
 
         VBox plots = (VBox) root.lookup("#plots");
-        plots.getChildren().add(candlestickChartViewer);
-        plots.getChildren().add(lineChartViewer);
+        final VBox stackedTitledPanes = new VBox();
+        stackedTitledPanes.getChildren().setAll(
+                new TitledPane("OHLC price per day", candlestickChartPanel),
+                new TitledPane("Price per tick", lineChartViewer)
+        );
+        ((TitledPane) stackedTitledPanes.getChildren().get(0)).setExpanded(true);
+        plots.getChildren().add(stackedTitledPanes);
 
         primaryStage.setScene(new Scene(root, 1024, 768));
         primaryStage.show();
 
-
         // Update line chart every second
-        new Timer().schedule(new UpdateLineChartTask(lineChart), 0, 1000);
+        new Timer().schedule(new UpdateLineChartTask(lineChart), 1000, 1000);
     }
 
 }
 
 class UpdateLineChartTask extends TimerTask {
-    LineChart lineChart;
+    final LineChart lineChart;
 
     UpdateLineChartTask(LineChart lineChart) {
         this.lineChart = lineChart;
@@ -61,6 +62,6 @@ class UpdateLineChartTask extends TimerTask {
 
     @Override
     public void run() {
-        this.lineChart.update();
+        Platform.runLater(() -> lineChart.update()); // to make sure update is executed from JavaFX thread
     }
 }

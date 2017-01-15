@@ -21,7 +21,7 @@ public class LineChart implements ChartMouseListenerFX {
         XYDataset dataset = this.createDataset("aapl"); // use Apple by default
 
         this.chart = ChartFactory.createTimeSeriesChart(
-                "Stock price per tick", "time", "price ($)", dataset, false, true, false);
+                "", "time", "price ($)", dataset, false, true, false);
         XYPlot plot = this.chart.getXYPlot();
         plot.getRangeAxis().setAutoRange(true);
 //        plot.datasetChanged(new DatasetChangeEvent(this, dataset));

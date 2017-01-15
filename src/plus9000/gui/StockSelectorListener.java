@@ -10,4 +10,8 @@ public interface StockSelectorListener {
     void stockChecked(String symbol);
 
     void stockUnchecked(String symbol);
+
+    void allStocksChecked();
+
+    void allStocksUnchecked();
 }
