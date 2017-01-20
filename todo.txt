@@ -1,21 +1,26 @@
 - linking between visualisations
+- stocks scrapen?: http://www.marketinout.com/stock-screener/stocks.php?list=volume_leaders&exch=lse
 
 ### STOCK SELECTOR ###
 - meer stocks van verschillende exchanges in tabbed view
 - bugs oplossen tussen stockselector en candlestick
+- link to mystery chart
 
 ### CANDLESTICK ###
 - pannen?
 - tooltips?
 - weken duidelijker alignen
 - zorgen dat lijnen niet telkens van kleur veranderen
+- volume laten zien
 
 ### LINECHART ###
 - linechart average per minute, average per uur
 - pannen?
 - tooltips?
 - stockdata refatoren?
+- current price op zelfde x plaats houden
 
 ### MYSTERY CHART ###
 - tooltips
 - good data
+- linking to stock selector

@@ -1,0 +1,142 @@
+Largest stock exchanges:
+New York Stock Exchange (NYSE)
+NASDAQ / NASDAQ
+London Stock Exchange (LSE) / LON
+Tokyo Stock Exchange (TSE) 
+Shanghai Stock Exchange (SSE) / SHA
+Hong Kong Stock Exchange (SEHK) / HKG or HKD
+Euronext - not used
+Shenzhen Stock Exchange (SZSE) / SHE
+Toronto Stock Exchange (TSX)
+Frankfurt Stock Exchange (FWB) - XETRA
+11. Bombay
+
+
+
+symbol,exchange,name
+
+Australia:
+ AGO.AX  	 Atlas Iron Limited	 Steel & Iron	 Basic Materials	 ASX	 265	 0.045	 0.002	 4.7	 270,270,000
+ IOT.AX  	 Iot Group Limited	 Electronic Equipment	 Consumer Goods	 ASX	 16	 0.036	 0.006	 20.0	 31,510,000
+ ICG.AX  	 Inca Minerals Limited	 Industrial Metals & Minerals	 Basic Materials	 ASX	 37	 0.018	 0.001	 5.9	 30,140,000
+ DUE.AX  	 DUET Group	 Gas Utilities	 Utilities	 ASX	 6,861	 2.93	 0.15	 5.4	 30,060,000
+ EYM.AX  	 Elysium Resources Limited	 Industrial Metals & Minerals	 Basic Materials	 ASX	 5	 0.01	 -0.001	 -9.1	 27,540,000
+ RNI.AX  	 Resource and Investment NL	 Industrial Metals & Minerals	 Basic Materials	 ASX	 18	 0.016	 0.001	 6.7	 27,010,000
+ STA.AX  	 Strandline Resources Limited	 Integrated Mining	 Basic Materials	 ASX	 18	 0.008	 0.001	 14.3	 22,080,000
+ LYC.AX  	 Lynas Corporation Limited	 Industrial Metals & Minerals	 Basic Materials	 ASX	 246	 0.08	 -0.002	 -2.4	 21,130,000
+ MZN.AX  	 Marindi Metals Limited	 Specialty Mining & Metals	 Basic Materials	 ASX	 24	 0.03	 0.001	 3.4	 19,430,000
+ GXY.AX  	 Galaxy Resources
+ 
+bombay:
+ SANGUI.BO  	 Sanguine Media Ltd.	 Entertainment - Diversified	 Services	 
+ SUZLON.BO  	 Suzlon Energy Limited	 Diversified Machinery	 Industrial Goods	 
+ HDIL.BO  	 Housing Development and Infrastructure Limited	 Real Estate Development	 Financial	 
+ SYNCOMF.BO  	 SYNCOM FORMULATIONS (INDIA) LTD.-$	 	 	 
+ JPASSOCIAT.BO  	 JAIPRAKASH ASSOCIATES LTD.	 	 	 
+ VIRTUALG.BO  	 VIRTUAL GLOBAL EDUCATION LTD.	 	 	 
+ SPICEJET.BO  	 SpiceJet Limited	 Air Services, Other	 Services	 
+ UNITECH.BO  	 Unitech Ltd.	 Real Estate Development	 Financial	 
+ RCOM.BO  	 Reliance Communications Ltd.	 Wireless Communications	 Technology	 
+ DLF.BO  	 DLF Limited
+ 
+frankfurt:
+ EOAN.DE  	 E.ON SE	 Diversified Utilities	 Utilities	 
+ CBK.DE  	 Commerzbank AG	 Money Center Banks	 Financial	 
+ DBK.DE  	 Deutsche Bank AG	 Money Center Banks	 Financial	 
+ RWE.DE  	 RWE AG	 Diversified Utilities	 Utilities	 
+ DTE.DE  	 Deutsche Telekom AG	 Wireless Communications	 Technology	 
+ LHA.DE  	 Deutsche Lufthansa Aktiengesellschaft	 Major Airlines	 Services	 
+ DAI.DE  	 Daimler AG	 Auto Manufacturers - Major	 Consumer Goods	 
+ IFX.DE  	 Infineon Technologies AG	 Semiconductor - Broad Line	 Technology	 
+ SNH.DE  	 Steinhoff International Holdings NV	 	 	 
+ BMW.DE  	 Bayerische Motoren Werke Aktiengesellschaft
+ 
+largest hong kong
+ 0136.HK Mascotte Holdings Limited
+ 0061.HK  	 North Asia Resources Holdings Limited
+ 1106.HK  	 Sino Haijing Holdings Ltd
+ 0939.HK  	 China Construction Bank Corporation
+ 0364.HK  	 Huafeng Group Holdings Limited	 
+ 8315.HK  	 King Force Securities Holdings Ltd	 
+ 8171.HK  	 China Trends Holdings Ltd.	
+ 1398.HK  	 Industrial and Commercial Bank of China Limited	
+ 0493.HK  	 GOME Electrical Appliances Holding Limited	 
+ 0997.HK  	 Chinlink International Holdings Limited
+
+
+Largest Toronto:
+CIA.TO	CHAMPION IRON LIMITED
+BTO.TO	B2GOLD CORP.
+NXE.TO	NEXGEN ENERGY LTD	
+IVN.TO	IVANHOE MINES LTD	
+YRI.TO	YAMANA GOLD INC	
+BBD-B.TO	BOMBARDIER INC., CL. B, SV	
+ELD.TO	ELDORADO GOLD	
+K.TO	KINROSS GOLD CORP.	
+CUS.TO	CANEXUS CORPORATION	
+MFC.TO	Manulife Financial Corporation	
+https://ca.finance.yahoo.com/actives?bypass=true&e=to
+
+LARGEST NYSE:
+BAC	Bank of America Corporation Com	
+WPX	WPX Energy, Inc. Common Stock	
+FTI	FMC Technologies, Inc. Common S	
+WFC	Wells Fargo & Company Common St	
+RAD	Rite Aid Corporation Common Sto	
+FCX	Freeport-McMoRan, Inc. Common S	
+FCAU	Fiat Chrysler Automobiles N.V.	
+VALE	VALE S.A. American Depositary	
+F	Ford Motor Company Common Stock
+JPM	JP Morgan Chase & Co. Common St	
+https://ca.finance.yahoo.com/actives?bypass=true&e=NQ
+
+Largest NASDAQ:
+TBIO	Transgenomic, Inc.	
+DRYS	DryShips Inc.	1.87
+AMD		Advanced Micro Devices, Inc.	
+AAPL	Apple Inc.	
+SIRI	Sirius XM Holdings Inc.	
+FB		Facebook, Inc.
+MSFT	Microsoft Corporation	
+CSCO	Cisco Systems, Inc.	
+QQQ		PowerShares QQQ Trust, Series 1	
+INTC	Intel Corporation
+https://ca.finance.yahoo.com/actives?bypass=true&e=O
+
+Largest UK (LSE) of the FTSE100:
+LLOY, loyds Banking Group PLC
+GLEN, Glencore PLC
+Vodafone Group PLC
+BARC, Barclays PLC
+RBS, Royal Bank of Scotland Group
+TW, Taylor Wimpey PLC
+TSCO, Tesco PLC
+BP, BP PLC
+ITV, ITV PLC
+HSBA, HSBC Holdings PLC
+http://www.morningstar.co.uk/uk/equities/mostactives.aspx
+
+Largest hong kong:
+SEHK: 0857,PetroChina: $2,492.04
+SEHK: 01398 , Industrial & Commercial Bank of China: $1,810.14
+SEHK: 0941, China Mobile: $1,584.90
+SEHK: 0939, China Construction Bank: $1,514.72
+SEHK: 0005, HSBC Holdings: $1,433.27
+SEHK: 3988, Bank of China: $1,127.57
+SEHK: 0386, Sinopec Corp: $957.57
+SEHK: 2628, China Life Insurance: $922.64
+SEHK: 1088, China Shenhua Energy: $636.23
+SEHK: 0883, CNOOC: $609.29
+
+Largest SSE (SHA):
+SSE: 601857,PetroChina						
+SSE: 601398 ,Industrial and Commercial Bank of China
+SSE: 601288 ,Agricultural Bank of China
+SSE: 601988,Bank of China
+SSE: 601628, China Life
+SSE: 600028,China Petroleum & Chemical
+SSE: 601318 ,Ping An Insurance
+SSE: 600036,China Merchants Bank
+SSE: 601088,China Shenhua Energy Company
+SSE: 600030,Citic Securities
+https://en.wikipedia.org/wiki/Shanghai_Stock_Exchange#SSE.27s_Top_10_Largest_Stocks

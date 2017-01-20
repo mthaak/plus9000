@@ -3,8 +3,10 @@ package plus9000.gui;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.xy.XYDataset;
 import plus9000.data.StockDataPerTick;
 import plus9000.data.StockDataPerTickRTAdapter;
 
@@ -50,6 +52,8 @@ public class LineChart {
         renderer.setSeriesItemLabelFont(1, new Font("Verdana", Font.PLAIN, 10));
         renderer.setSeriesPaint(1, new Color(255, 0, 0));
         renderer.setSeriesItemLabelPaint(1, new Color(255, 0, 0)); // text same color as line
+
+
     }
 
     /* Needs to be called once every second */
