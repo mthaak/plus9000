@@ -1,0 +1,80 @@
+Exchange	Symbol	Name	Industry	Sector	Cap, mln	Last	Change	Change, %	Volume
+NYSE	BAC	Bank of America Corporation	Money Center Banks	Financial	229,183	23.01	0.08	0.3	161,423,405
+NYSE	XLF	Financial Select Sector SPDR	Exchange Traded Fund	Financial	12,295	23.51	0.13	0.6	72,324,355
+NYSE	SPY	SPDRs	Exchange Traded Fund	Financial	194,141	227.05	0.52	0.2	62,353,614
+NYSE	WPX	WPX Energy, Inc.	Independent Oil & Gas	Basic Materials	5,129	13.72	-0.06	-0.4	56,239,433
+NYSE	JNUG	Direxion Daily Junior Gold Mine	Exchange Traded Fund	Financial		8.37	0.08	1.0	54,725,096
+NYSE	NUGT	Direxion Daily Gold Miners Bull 3X Shrs	Exchange Traded Fund	Financial		9.70	0.15	1.6	50,239,676
+NYSE	GDX	Market Vectors Gold Miners ETF	Exchange Traded Fund	Financial	9,941	22.74	0.12	0.5	48,790,496
+NYSE	FTI	FMC Technologies, Inc.	Oil & Gas Equipment & Services	Basic Materials	8,216	35.85	-0.15	-0.4	40,521,257
+NYSE	WFC	Wells Fargo & Company	Money Center Banks	Financial	279,993	55.31	0.81	1.5	37,205,900
+NYSE	VXX	iPath S&P 500 VIX Short-Term Futures ETN	Exchange Traded Fund	Financial		21.45	0.05	0.2	35,453,221
+NASDAQ	TBIO	Transgenomic Inc.	Scientific & Technical Instruments	Technology	9	0.98	-0.14	-12.5	63,395,191
+NASDAQ	DRYS	DryShips, Inc.	Shipping	Services	3	1.87	0.03	1.6	40,457,242
+NASDAQ	AMD	Advanced Micro Devices, Inc.	Semiconductor - Broad Line	Technology	10,492	10.58	-0.18	-1.7	38,339,063
+NASDAQ	AAPL	Apple Inc.	Personal Computers	Technology	628,733	119.04	-0.21	-0.2	25,938,325
+NASDAQ	SIRI	SIRIUS XM Radio Inc.	Broadcasting - Radio	Services	21,905	4.61	0.03	0.7	25,408,123
+NASDAQ	FB	Facebook, Inc.	Internet Information Providers	Technology	355,688	128.34	1.72	1.4	24,838,985
+NASDAQ	MSFT	Microsoft Corporation	Application Software	Technology	488,603	62.70	0.09	0.1	19,350,503
+NASDAQ	RNVA	Rennova Health Inc.	Software	Technology	10	0.095	-0.005	-5.0	18,216,181
+NASDAQ	CSCO	Cisco Systems, Inc.	Networking & Communication Devices	Technology	151,747	30.07	0.03	0.10	15,827,645
+TSX	BTO.TO	B2Gold Corp.	Gold	Basic Materials	2,962	3.64	0.03	0.8	6,480,000
+TSX	MGA.TO	Mega Uranium Ltd.	Industrial Metals & Minerals	Basic Materials	42	0.24	0.02	9.1	5,740,000
+TSX	NXE.TO	Nexgen Energy Ltd			704	3.33	0.16	5.0	5,450,000
+TSX	IVN.TO	Ivanhoe Mines Ltd	Industrial Metals & Minerals	Basic Materials	2,166	3.35	0.31	10.2	5,350,000
+TSX	YRI.TO	Yamana Gold, Inc.	Gold	Basic Materials	3,724	4.17	0.06	1.5	5,280,000
+TSX	ELD.TO	Eldorado Gold Corp.	Gold	Basic Materials	2,802	4.48	0.11	2.5	4,360,000
+TSX	K.TO	Kinross Gold Corp.	Gold	Basic Materials	3,894	4.41	0.05	1.1	4,300,000
+TSX	UWE.TO	U3O8 Corp	Industrial Metals & Minerals	Basic Materials	8	0.04	-0.005	-11.1	4,120,000
+TSX	CUS.TO	Canexus Corporation	Specialty Chemicals	Basic Materials	307	1.63	0.00	0.00	3,960,000
+TSX	MFC.TO	Manulife Financial Corporation	Life Insurance	Financial	48,152	24.53	0.10	0.4	3,890,000
+XETRA	EOAN.DE	E.ON SE	Diversified Utilities	Utilities		7.22	0.05	0.7	5,540,000
+XETRA	CBK.DE	Commerzbank AG	Money Center Banks	Financial		7.45	-0.16	-2.1	5,290,000
+XETRA	DBK.DE	Deutsche Bank AG	Money Center Banks	Financial		17.75	-0.40	-2.2	3,580,000
+XETRA	RWE.DE	RWE AG	Diversified Utilities	Utilities		12.65	0.20	1.6	2,930,000
+XETRA	DTE.DE	Deutsche Telekom AG	Wireless Communications	Technology		16.29	-0.06	-0.4	2,110,000
+XETRA	LHA.DE	Deutsche Lufthansa Aktiengesellschaft	Major Airlines	Services		11.31	-0.16	-1.4	2,030,000
+XETRA	DAI.DE	Daimler AG	Auto Manufacturers - Major	Consumer Goods		69.95	-1.38	-1.9	1,730,000
+XETRA	IFX.DE	Infineon Technologies AG	Semiconductor - Broad Line	Technology		16.47	-0.06	-0.4	1,080,000
+XETRA	SNH.DE	Steinhoff International Holdings NV				4.99	0.07	1.4	818,179
+XETRA	BMW.DE	Bayerische Motoren Werke Aktiengesellschaft	Auto Manufacturers - Major	Consumer Goods		86.10	-1.71	-1.9	737,267
+HKSE	0136.HK	Mascotte Holdings Limited	Recreational Goods, Other	Consumer Goods	22,080	0.29	0.005	1.8	518,740,000
+HKSE	0061.HK	North Asia Resources Holdings Limited	Information Technology Services	Technology	1,820	0.023	0.002	9.5	488,140,000
+HKSE	1106.HK	Sino Haijing Holdings Ltd			630	0.197	0.013	7.1	313,900,000
+HKSE	0939.HK	China Construction Bank Corporation	Money Center Banks	Financial	1,430,000	5.80	-0.07	-1.2	273,930,000
+HKSE	0364.HK	Huafeng Group Holdings Limited	Textile Industrial	Industrial Goods	946	0.052	-0.001	-1.9	235,920,000
+HKSE	8315.HK	King Force Securities Holdings Ltd			228	0.028	-0.002	-6.7	234,160,000
+HKSE	8171.HK	China Trends Holdings Ltd.	Communication Equipment	Technology	726	0.019	0.00	0.00	220,240,000
+HKSE	1398.HK	Industrial and Commercial Bank of China Limited	Money Center Banks	Financial	1,540,000	4.73	-0.04	-0.8	218,510,000
+HKSE	0493.HK	GOME Electrical Appliances Holding Limited	Specialty Retail, Other	Services	20,650	1.01	0.04	4.1	207,670,000
+HKSE	0997.HK	Chinlink International Holdings Limited	Home Furnishings & Fixtures	Consumer Goods	218	0.024	-0.003	-11.1	200,870,000
+BSE	SANGUI.BO	Sanguine Media Ltd.	Entertainment - Diversified	Services		0.14	0.00	0.00	31,560,000
+BSE	SUZLON.BO	Suzlon Energy Limited	Diversified Machinery	Industrial Goods		15.20	0.16	1.1	4,770,000
+BSE	HDIL.BO	Housing Development and Infrastructure Limited	Real Estate Development	Financial		64.60	2.05	3.3	4,420,000
+BSE	SYNCOMF.BO	SYNCOM FORMULATIONS (INDIA) LTD.-$				1.91	-0.04	-2.1	3,260,000
+BSE	JPASSOCIAT.BO	JAIPRAKASH ASSOCIATES LTD.				9.78	-0.04	-0.4	3,250,000
+BSE	VIRTUALG.BO	VIRTUAL GLOBAL EDUCATION LTD.				3.74	-0.19	-4.8	2,970,000
+BSE	SPICEJET.BO	SpiceJet Limited	Air Services, Other	Services		65.75	0.25	0.4	2,770,000
+BSE	UNITECH.BO	Unitech Ltd.	Real Estate Development	Financial		4.54	0.08	1.8	2,750,000
+BSE	RCOM.BO	Reliance Communications Ltd.	Wireless Communications	Technology		31.60	0.20	0.6	2,000,000
+BSE	DLF.BO	DLF Limited	Real Estate Development	Financial		129.60	5.50	4.4	1,750,000
+ASX	AGO.AX	Atlas Iron Limited	Steel & Iron	Basic Materials	265	0.045	0.002	4.7	270,270,000
+ASX	IOT.AX	Iot Group Limited	Electronic Equipment	Consumer Goods	16	0.036	0.006	20.0	31,510,000
+ASX	ICG.AX	Inca Minerals Limited	Industrial Metals & Minerals	Basic Materials	37	0.018	0.001	5.9	30,140,000
+ASX	DUE.AX	DUET Group	Gas Utilities	Utilities	6,861	2.93	0.15	5.4	30,060,000
+ASX	EYM.AX	Elysium Resources Limited	Industrial Metals & Minerals	Basic Materials	5	0.01	-0.001	-9.1	27,540,000
+ASX	RNI.AX	Resource and Investment NL	Industrial Metals & Minerals	Basic Materials	18	0.016	0.001	6.7	27,010,000
+ASX	STA.AX	Strandline Resources Limited	Integrated Mining	Basic Materials	18	0.008	0.001	14.3	22,080,000
+ASX	LYC.AX	Lynas Corporation Limited	Industrial Metals & Minerals	Basic Materials	246	0.08	-0.002	-2.4	21,130,000
+ASX	MZN.AX	Marindi Metals Limited	Specialty Mining & Metals	Basic Materials	24	0.03	0.001	3.4	19,430,000
+ASX	GXY.AX	Galaxy Resources	Industrial Metals & Minerals	Basic Materials	916	0.67	0.01	1.5	17,910,000
+LSE	KOD.L	Kodal Minerals Plc			4	0.359	0.019	5.6	495,320,000
+LSE	GUN.L	Gunsynd Plc	Biotechnology	Healthcare	1	0.045	0.0025	5.9	386,700,000
+LSE	XTR.L	Xtract Energy Plc			4	0.015	-0.0025	-14.3	305,480,000
+LSE	LGO.L	Leni Gas & Oil PLC	Oil & Gas Drilling & Exploration	Basic Materials	10	0.146	0.011	8.1	294,820,000
+LSE	EDL.L	Edenville Energy PLC	Coal	Basic Materials	3	0.86	0.105	13.9	106,080,000
+LSE	ADL.L	Andalas Energy and Power Plc	Closed End Funds	Financial	2	0.123	0.015	13.9	91,010,000
+LSE	BLU.L	Blue Star Capital PLC	Investment Trusts	Financial	1	0.15	-0.015	-9.1	69,780,000
+LSE	MYN.L	Mayan Energy Limited			4	0.011	-0.0002	-1.9	61,980,000
+LSE	LLOY.L	Lloyds Banking Group PLC	Money Center Banks	Financial	47,135	65.02	-1.02	-1.5	60,690,000
+LSE	SOLO.L	Solo Oil PLC	Oil & Gas Drilling & Exploration	Basic Materials	19	0.404	0.029	7.7	58,540,000

@@ -6,6 +6,7 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import plus9000.data.StockData;
 import plus9000.gui.CandlestickChartPanel;
 import plus9000.gui.LineChartPanel;
 import plus9000.gui.MysteryChartPanel;
@@ -15,6 +16,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        StockData stocks = StockData.loadedFromFile("data/stocks.tsv");
+
         // Left
         StockSelector stockSelector = new StockSelector();
 
