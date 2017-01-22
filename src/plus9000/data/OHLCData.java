@@ -35,10 +35,10 @@ public class OHLCData {
 
     public static OHLCData loadedFromFile(String symbol) {
         OHLCData stockData = new OHLCData(symbol);
-        File file = new File(String.format("data/%s.csv", symbol));
         try {
+            File file = new File(String.format("data/day/%s.csv", symbol.replace(':', '_'))); // file names cannot contain :
             Scanner scanner = new Scanner(file);
-            scanner.useDelimiter(",|\\r\\n");
+            scanner.useDelimiter(",|\\n");
             scanner.useLocale(Locale.ENGLISH);
 
             scanner.nextLine(); // skip header
@@ -141,7 +141,7 @@ public class OHLCData {
             scanner.close();
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            // Ignore
         }
         return stockData;
     }

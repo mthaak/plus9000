@@ -4,7 +4,10 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import plus9000.util.Period;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Martin on 12-Jan-17.
@@ -28,17 +31,20 @@ public class OHLCDataCollection extends OHLCSeriesCollection {
         this.allSeriesPerYear = new HashMap<>();
     }
 
-    public static OHLCDataCollection loadedFromFiles() {
+    public static OHLCDataCollection loadedFromStockData(StockData stockData) {
         OHLCDataCollection ohlcDataCollection = new OHLCDataCollection();
-        ohlcDataCollection.loadFromFiles(new String[]{"aapl", "amzn", "bac", "fb", "ge", "googl", "intc", "jnj", "msft", "xom"});
-        ohlcDataCollection.include("aapl"); // include Apple by default
+        for (String exchange : stockData.getExhanges()) {
+            for (Stock stock : stockData.getStocksOfExchange(exchange)) {
+                ohlcDataCollection.loadFromFile(stock.getFullSymbol());
+            }
+        }
         return ohlcDataCollection;
     }
 
-    public void loadFromFiles(String[] symbols) {
-        this.allSymbols.addAll(Arrays.asList(symbols));
-        for (String symbol : symbols) {
-            OHLCData ohlcData = OHLCData.loadedFromFile(symbol);
+    public void loadFromFile(String symbol) {
+        OHLCData ohlcData = OHLCData.loadedFromFile(symbol);
+        if (!ohlcData.getPerDay().isEmpty()) {
+            this.allSymbols.add(symbol);
             this.allSeriesPerDay.put(symbol, ohlcData.getPerDay());
             this.allSeriesPerWeek.put(symbol, ohlcData.getPerWeek());
             this.allSeriesPerMonth.put(symbol, ohlcData.getPerMonth());

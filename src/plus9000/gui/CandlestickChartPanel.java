@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.jfree.chart.fx.ChartViewer;
+import plus9000.data.StockData;
 import plus9000.util.Period;
 
 /**
@@ -15,8 +16,8 @@ import plus9000.util.Period;
 public class CandlestickChartPanel extends VBox implements StockSelectorListener {
     final private CandlestickChart candlestickChart;
 
-    public CandlestickChartPanel() {
-        this.candlestickChart = new CandlestickChart();
+    public CandlestickChartPanel(StockData stockData) {
+        this.candlestickChart = new CandlestickChart(stockData);
         this.candlestickChart.show("aapl"); // show Apple by default
         ChartViewer viewer = new ChartViewer(candlestickChart.getChart());
 
@@ -81,8 +82,13 @@ public class CandlestickChartPanel extends VBox implements StockSelectorListener
     }
 
     @Override
-    public void stockFocused(String symbol){
+    public void stockFocused(String symbol) {
         this.candlestickChart.setFocus(symbol);
+    }
+
+    @Override
+    public void stockUnfocused() {
+        this.candlestickChart.unfocus();
     }
 
     @Override
@@ -103,5 +109,10 @@ public class CandlestickChartPanel extends VBox implements StockSelectorListener
     @Override
     public void allStocksUnchecked() {
         this.candlestickChart.hideAll();
+    }
+
+    @Override
+    public void exchangeChanged(String exchange) {
+        // Do nothing
     }
 }

@@ -3,10 +3,8 @@ package plus9000.gui;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.labels.XYToolTipGenerator;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.data.xy.XYDataset;
 import plus9000.data.StockDataPerTick;
 import plus9000.data.StockDataPerTickRTAdapter;
 
@@ -90,7 +88,7 @@ public class LineChart {
 
     private StockDataPerTickRTAdapter createDataset(String symbol) {
         StockDataPerTick stocks = new StockDataPerTick();
-        stocks.loadFromFile("data/" + symbol.toUpperCase() + "_161212_161212.csv");
+        stocks.loadFromFile("data/tick/" + symbol.toUpperCase() + "_161212_161212.csv");
         return new StockDataPerTickRTAdapter(stocks);
     }
 

@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.jfree.chart.fx.ChartViewer;
+import plus9000.data.StockData;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,7 +16,7 @@ import java.util.TimerTask;
 public class LineChartPanel extends VBox implements StockSelectorListener {
     private LineChart lineChart;
 
-    public LineChartPanel() {
+    public LineChartPanel(StockData stockData) {
         this.lineChart = new LineChart();
         ChartViewer viewer = new ChartViewer(lineChart.getChart());
 
@@ -52,6 +53,11 @@ public class LineChartPanel extends VBox implements StockSelectorListener {
     }
 
     @Override
+    public void stockUnfocused() {
+        // Do nothing
+    }
+
+    @Override
     public void stockChecked(String symbol) {
         // Do nothing
     }
@@ -68,6 +74,11 @@ public class LineChartPanel extends VBox implements StockSelectorListener {
 
     @Override
     public void allStocksUnchecked() {
+        // Do nothing
+    }
+
+    @Override
+    public void exchangeChanged(String exchange) {
         // Do nothing
     }
 }

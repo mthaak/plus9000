@@ -8,148 +8,139 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.cell.CheckBoxListCell;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.util.Callback;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
+import plus9000.data.Stock;
+import plus9000.data.StockData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StockSelector extends TitledPane {
+public class StockSelector extends TabPane {
+    StockData stockData;
     List<StockSelectorListener> listeners;
 
-    public StockSelector() {
+    public StockSelector(StockData stockData) {
+        this.stockData = stockData;
         this.listeners = new ArrayList<>();
 
-        final List<StockListItem> stocks = new ArrayList<>();
-        stocks.add(new StockListItem("Apple", "aapl", true, true));
-        stocks.add(new StockListItem("Amazon", "amzn", false, false));
-        stocks.add(new StockListItem("Bank of America", "bac", false, false));
-        stocks.add(new StockListItem("Facebook", "fb", false, false));
-        stocks.add(new StockListItem("General Electrics", "ge", false, false));
-        stocks.add(new StockListItem("Google/Alphabet", "googl", false, false));
-        stocks.add(new StockListItem("Intel", "intc", false, false));
-        stocks.add(new StockListItem("Johnson & Johnson", "jnj", false, false));
-        stocks.add(new StockListItem("Microsoft", "msft", false, false));
-        stocks.add(new StockListItem("Exxon Mobil", "xom", false, false));
+        this.setMinWidth(470);
 
-        final ListView<StockListItem> listView = new ListView();
-        listView.setItems(FXCollections.observableArrayList(stocks));
+        List<String> exchanges = this.stockData.getExhanges();
+        for (String exchange : exchanges) {
+            List<StockListItem> stockListItems = new ArrayList<>();
+            List<Stock> stocks = this.stockData.getStocksOfExchange(exchange);
+            for (Stock stock : stocks) {
+                stockListItems.add(new StockListItem(stock, false, false));
+            }
 
-        // Set stock focused listener
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StockListItem>() {
-            @Override
-            public void changed(ObservableValue<? extends StockListItem> observableValue, StockListItem prevFocusedStock, StockListItem newFocusedStock) {
-                if (prevFocusedStock != null && !prevFocusedStock.isChecked()) {
-                    notifyListenersStockUnchecked(prevFocusedStock.getSymbol());
+            // ListView
+            final ListView<StockListItem> listView = new ListView();
+            listView.setItems(FXCollections.observableArrayList(stockListItems));
+            listView.setStyle("-fx-background-color:transparent;"); // remove border
+            listView.setCellFactory(param -> new StockListCell(this));
+            // Set stock focused listener
+            listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StockListItem>() {
+                @Override
+                public void changed(ObservableValue<? extends StockListItem> observableValue, StockListItem prevFocusedStock, StockListItem newFocusedStock) {
+                    if (prevFocusedStock != null && !prevFocusedStock.isChecked()) {
+                        notifyListenersStockUnchecked(prevFocusedStock.symbol);
+                    }
+                    // Check and focus
+                    notifyListenersStockChecked(newFocusedStock.symbol); // even if it's not actually checked
+                    notifyListenersStockFocused(newFocusedStock.symbol);
                 }
-                // Check and focus
-                notifyListenersStockChecked(newFocusedStock.getSymbol()); // even if it's not actually checked
-                notifyListenersStockFocused(newFocusedStock.getSymbol());
+            });
+
+            // Button
+            Button hideAllButton = new Button("Clear all");
+            hideAllButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    for (StockListItem stock : stockListItems)
+                        stock.getCheckedProperty().setValue(false);
+                    notifyListenersAllStocksUnchecked();
+                }
+            });
+
+            // HBox
+            HBox hbox = new HBox();
+            hbox.getChildren().setAll(hideAllButton);
+
+            // VBox
+            VBox vBox = new VBox();
+            vBox.getChildren().setAll(listView, hbox);
+
+            // Tab
+            Tab tab = new Tab(exchange);
+            tab.setContent(vBox);
+            tab.setClosable(false);
+            this.getTabs().add(tab);
+        }
+        this.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                notifyListenersExchangeChanged(getTabs().get((int) newValue).getText());
             }
         });
-
-        // Set stock checked/unchecked listener
-        listView.setCellFactory(CheckBoxListCell.forListView(new Callback<StockListItem, ObservableValue<Boolean>>() {
-            @Override
-            public ObservableValue<Boolean> call(StockListItem stock) {
-                stock.getCheckedProperty().addListener((obs, wasChecked, isNowChecked) -> {
-                    if (!wasChecked && isNowChecked && !stock.getFocusedProperty().getValue())
-                                notifyListenersStockChecked(stock.getSymbol());
-                    else if (wasChecked && !isNowChecked && !stock.getFocusedProperty().getValue())
-                                notifyListenersStockUnchecked(stock.getSymbol());
-                        }
-                );
-                return stock.getCheckedProperty();
-            }
-        }));
-
-        Button showAllButton = new Button("Show all");
-        showAllButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                for (StockListItem stock : stocks)
-                    stock.getCheckedProperty().setValue(true);
-                notifyListenersAllStocksChecked();
-            }
-        });
-
-        Button hideAllButton = new Button("Hide all");
-        hideAllButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                for (StockListItem stock : stocks)
-                    stock.getCheckedProperty().setValue(false);
-                notifyListenersAllStocksUnchecked();
-            }
-        });
-
-        this.setText("US stocks");
-        this.setCollapsible(false);
-        VBox vBox = new VBox();
-        this.setContent(vBox);
-        vBox.setPadding(new Insets(0));
-
-        listView.setStyle("-fx-background-color:transparent;"); // remove border
-        vBox.getChildren().add(listView);
-
-        HBox hBox = new HBox();
-        hBox.getChildren().add(showAllButton);
-        hBox.getChildren().add(hideAllButton);
-        vBox.getChildren().add(hBox);
     }
 
-    public void addListener(StockSelectorListener listener){
+    public void addListener(StockSelectorListener listener) {
         this.listeners.add(listener);
     }
 
-    private void notifyListenersStockFocused(String symbol){
+    public void notifyListenersStockFocused(String symbol) {
         for (StockSelectorListener listener : this.listeners)
             listener.stockFocused(symbol);
     }
 
-    private void notifyListenersStockChecked(String symbol){
+    public void notifyListenersStockUnfocused() {
+        for (StockSelectorListener listener : this.listeners)
+            listener.stockUnfocused();
+    }
+
+    public void notifyListenersStockChecked(String symbol) {
         for (StockSelectorListener listener : this.listeners)
             listener.stockChecked(symbol);
     }
 
-    private void notifyListenersStockUnchecked(String symbol){
+    public void notifyListenersStockUnchecked(String symbol) {
         for (StockSelectorListener listener : this.listeners)
             listener.stockUnchecked(symbol);
     }
 
-    private void notifyListenersAllStocksChecked() {
+    public void notifyListenersAllStocksChecked() {
         for (StockSelectorListener listener : this.listeners)
             listener.allStocksChecked();
     }
 
-    private void notifyListenersAllStocksUnchecked() {
+    public void notifyListenersAllStocksUnchecked() {
         for (StockSelectorListener listener : this.listeners)
             listener.allStocksUnchecked();
     }
 
-
+    public void notifyListenersExchangeChanged(String exchange) {
+        for (StockSelectorListener listener : this.listeners)
+            listener.exchangeChanged(exchange);
+    }
 }
 
-class StockListItem {
-    private String name;
-    private String symbol;
+class StockListItem extends Stock {
+    public Background oldBackground;
     private BooleanProperty focused;
     private BooleanProperty checked;
 
-    public StockListItem(String name, String symbol, boolean focused, boolean checked) {
-        this.name = name;
-        this.symbol = symbol;
+    public StockListItem(Stock stock, boolean focused, boolean checked) {
+        super(stock);
         this.focused = new SimpleBooleanProperty(focused);
         this.checked = new SimpleBooleanProperty(checked);
-    }
-
-    public String getSymbol(){
-        return this.symbol;
     }
 
     public boolean isFocused() {
@@ -164,11 +155,94 @@ class StockListItem {
         return this.focused;
     }
 
-    public BooleanProperty getCheckedProperty(){
+    public BooleanProperty getCheckedProperty() {
         return this.checked;
     }
+}
 
-    public String toString(){
-        return String.format("%s (%s)", this.name, this.symbol.toUpperCase());
+class StockListCell extends ListCell<StockListItem> {
+    final CheckBox checkBox = new CheckBox();
+    final StockSelector stockSelector;
+
+    public StockListCell(StockSelector stockSelector) {
+        super();
+        this.stockSelector = stockSelector;
+    }
+
+    @Override
+    public void updateItem(final StockListItem stockListItem, boolean empty) {
+        if (stockListItem == null)
+            return;
+
+        // Checkbox
+        checkBox.setText(stockListItem.toString());
+        checkBox.selectedProperty().bindBidirectional(stockListItem.getCheckedProperty());
+        checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean wasChecked, Boolean isNowChecked) {
+                if (!wasChecked && isNowChecked && !stockListItem.getFocusedProperty().getValue()) {
+                    stockSelector.notifyListenersStockChecked(stockListItem.getFullSymbol());
+                } else if (wasChecked && !isNowChecked && !stockListItem.getFocusedProperty().getValue()) {
+                    stockSelector.notifyListenersStockUnchecked(stockListItem.getFullSymbol());
+                }
+            }
+        });
+
+        // Cell
+        this.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                checkBox.requestFocus(); // so checkbox is already focused when you enter the cell
+                stockListItem.oldBackground = getBackground();
+                setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+                stockSelector.notifyListenersStockChecked(stockListItem.getFullSymbol());
+                stockSelector.notifyListenersStockFocused(stockListItem.getFullSymbol());
+            }
+        });
+        this.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                setBackground(stockListItem.oldBackground);
+                if (!stockListItem.isChecked())
+                    stockSelector.notifyListenersStockUnchecked(stockListItem.getFullSymbol());
+                stockSelector.notifyListenersStockUnfocused();
+            }
+        });
+        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                checkBox.requestFocus(); // keep focus
+                checkBox.fire();
+            }
+        });
+
+        double change = Double.parseDouble(stockListItem.change);
+
+        // Indicator
+        Shape indicator;
+        Text indicatorText = new Text(stockListItem.change + "  ");
+        if (change > 0) {
+            indicator = new Polygon(0.0, -5.0, 5.0, 0.0, 10.0, -5.0);
+            indicator.setFill(Color.GREEN);
+            indicatorText.setFill(Color.GREEN);
+        } else if (change < 0) {
+            indicator = new Polygon(0.0, -5.0, 5.0, -10.0, 10.0, -5.0);
+            indicator.setFill(Color.RED);
+            indicatorText.setFill(Color.RED);
+        } else {
+            indicator = new Rectangle(10, 3, Color.BLACK);
+            indicatorText.setFill(Color.BLACK);
+        }
+
+        // Space
+        Pane space = new Pane();
+        HBox.setHgrow(space, Priority.ALWAYS); // such that indicator floats right
+
+        // HBox
+        HBox hBox = new HBox();
+        hBox.getChildren().setAll(checkBox, space, indicatorText, indicator);
+        hBox.setAlignment(Pos.BASELINE_LEFT);
+
+        setGraphic(hBox);
     }
 }

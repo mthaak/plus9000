@@ -22,8 +22,8 @@ public class StockDataPerTick {
     }
 
     public void loadFromFile(String filePath) {
-        File file = new File(filePath);
         try {
+            File file = new File(filePath);
             Scanner scanner = new Scanner(file);
             scanner.useDelimiter(",|\\n");
             scanner.useLocale(Locale.ENGLISH);

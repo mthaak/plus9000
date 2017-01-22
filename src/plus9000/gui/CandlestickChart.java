@@ -9,6 +9,7 @@ import org.jfree.chart.axis.TickUnits;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import plus9000.data.OHLCDataCollection;
+import plus9000.data.StockData;
 import plus9000.util.Period;
 
 import java.awt.*;
@@ -27,8 +28,8 @@ public class CandlestickChart {
     private int focusedSeries;
     private Paint beforeFocusPaint;
 
-    public CandlestickChart() {
-        this.dataset = OHLCDataCollection.loadedFromFiles();
+    public CandlestickChart(StockData stockData) {
+        this.dataset = OHLCDataCollection.loadedFromStockData(stockData);
 
         this.chart = ChartFactory.createCandlestickChart("", "", "price ($)", this.dataset, true);
 

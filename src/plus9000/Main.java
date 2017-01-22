@@ -9,30 +9,30 @@ import javafx.stage.Stage;
 import plus9000.data.StockData;
 import plus9000.gui.CandlestickChartPanel;
 import plus9000.gui.LineChartPanel;
-import plus9000.gui.MysteryChartPanel;
 import plus9000.gui.StockSelector;
+import plus9000.gui.WorldChartPanel;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        StockData stocks = StockData.loadedFromFile("data/stocks.tsv");
+        // Data
+        StockData stockData = StockData.loadedFromFile("data/stocks.tsv");
 
         // Left
-        StockSelector stockSelector = new StockSelector();
+        StockSelector stockSelector = new StockSelector(stockData);
 
-        MysteryChartPanel mysteryChart = new MysteryChartPanel();
-        TitledPane mysteryChartPane = new TitledPane("World", mysteryChart);
-        mysteryChartPane.setCollapsible(false);
+        WorldChartPanel worldChart = new WorldChartPanel(stockData);
+        stockSelector.addListener(worldChart);
 
         VBox left = new VBox();
-        left.getChildren().setAll(stockSelector, mysteryChartPane);
+        left.getChildren().setAll(stockSelector, worldChart);
 
         // Center
-        CandlestickChartPanel candlestickChart = new CandlestickChartPanel();
+        CandlestickChartPanel candlestickChart = new CandlestickChartPanel(stockData);
         stockSelector.addListener(candlestickChart);
 
-        LineChartPanel lineChart = new LineChartPanel();
+        LineChartPanel lineChart = new LineChartPanel(stockData);
         stockSelector.addListener(lineChart);
 
         VBox center = new VBox();
@@ -49,8 +49,8 @@ public class Main extends Application {
 
         // Stage
         primaryStage.setTitle("Plus9000");
-        primaryStage.setWidth(1024);
-        primaryStage.setHeight(768);
+        primaryStage.setWidth(1600);
+        primaryStage.setHeight(1024);
         primaryStage.setScene(new Scene(root, 1024, 768));
         primaryStage.show();
     }
