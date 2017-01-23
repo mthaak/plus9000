@@ -1,4 +1,7 @@
 - stocks scrapen?: http://www.marketinout.com/stock-screener/stocks.php?list=volume_leaders&exch=lse
+Driehoekjes verkeerd georiënteerd
+Radius cirkeltjes voor elke exchange en dan interpoleren
+
 
 ### STOCK SELECTOR ###
 
