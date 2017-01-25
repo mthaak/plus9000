@@ -1,25 +1,17 @@
 - stocks scrapen?: http://www.marketinout.com/stock-screener/stocks.php?list=volume_leaders&exch=lse
-Driehoekjes verkeerd georiënteerd
-Radius cirkeltjes voor elke exchange en dan interpoleren
-
 
 ### STOCK SELECTOR ###
 
 ### CANDLESTICK ###
 - pannen?
-- tooltips mooier maken
-- weken duidelijker alignen
 - volume laten zien?
+- weken duidelijker alignen
+- tooltips mooier maken
 
 ### LINECHART ###
-- linechart average per minute, average per uur?
 - pannen?
 - tooltips?
-- stockdata refatoren?
-- current price op zelfde x plaats houden
-- koppelen aan stockselector
-- meer stocks downloaden
 
 ### WORLD CHART ###
-- tooltips
-- remove axes
+
+ALLES GOED TESTEN

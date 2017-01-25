@@ -49,9 +49,9 @@ public class Main extends Application {
 
         // Stage
         primaryStage.setTitle("Plus9000");
-        primaryStage.setWidth(1600);
+        primaryStage.setWidth(1280);
         primaryStage.setHeight(1024);
-        primaryStage.setScene(new Scene(root, 1024, 768));
+        primaryStage.setScene(new Scene(root, 1280, 1024));
         primaryStage.show();
     }
 }

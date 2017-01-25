@@ -44,6 +44,7 @@ public class StockData {
                     stock.change = scanner.next();
                     stock.changePer = scanner.next();
                     stock.volume = scanner.next();
+                    stock.setDataAvailable();
                     this.stocks.add(stock);
                 } catch (InputMismatchException e) {
                     //

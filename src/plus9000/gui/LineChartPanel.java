@@ -15,16 +15,17 @@ import java.util.TimerTask;
  */
 public class LineChartPanel extends VBox implements StockSelectorListener {
     private LineChart lineChart;
+    private int stocksChecked = 0;
 
     public LineChartPanel(StockData stockData) {
-        this.lineChart = new LineChart();
+        this.lineChart = new LineChart(stockData);
         ChartViewer viewer = new ChartViewer(lineChart.getChart());
 
         Button lastMinute = new Button("Last minute");
-        lastMinute.setOnAction(event -> lineChart.changeRange(600000));
+        lastMinute.setOnAction(event -> lineChart.changeRange(60000));
 
         Button last10Minutes = new Button("Last 10 minutes");
-        last10Minutes.setOnAction(event -> lineChart.changeRange(6000000));
+        last10Minutes.setOnAction(event -> lineChart.changeRange(600000));
 
         Button lastHour = new Button("Last hour");
         lastHour.setOnAction(event -> lineChart.changeRange(3600000));
@@ -49,7 +50,8 @@ public class LineChartPanel extends VBox implements StockSelectorListener {
 
     @Override
     public void stockFocused(String symbol) {
-        this.lineChart.changeStock(symbol);
+        if (this.stocksChecked == 0)
+            this.lineChart.showStock(symbol);
     }
 
     @Override
@@ -59,12 +61,16 @@ public class LineChartPanel extends VBox implements StockSelectorListener {
 
     @Override
     public void stockChecked(String symbol) {
-        // Do nothing
+        this.stocksChecked++;
+        if (this.stocksChecked == 1) // only show first checked
+            this.lineChart.showStock(symbol);
     }
 
     @Override
     public void stockUnchecked(String symbol) {
-        // Do nothing
+        this.stocksChecked--;
+        if (this.stocksChecked == 0)
+            this.lineChart.hideStock();
     }
 
     @Override
@@ -92,6 +98,6 @@ class UpdateLineChartTask extends TimerTask {
 
     @Override
     public void run() {
-        Platform.runLater(() -> lineChart.update()); // to make sure update is executed from JavaFX thread
+        Platform.runLater(lineChart::update); // to make sure update is executed from JavaFX thread
     }
 }

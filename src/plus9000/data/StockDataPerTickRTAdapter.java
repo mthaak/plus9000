@@ -7,7 +7,6 @@ import org.jfree.data.general.DatasetGroup;
 import org.jfree.data.xy.XYDataset;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,65 +15,69 @@ import java.util.List;
  */
 public class StockDataPerTickRTAdapter implements XYDataset {
     private StockDataPerTick stockDataPerTick;
-    private Date currentTime; // ms
-    private long range; // time difference (ms) between lower and upper bound index
+    private long currentTime; // ms
+    private long range; // ms
     private int lowerBoundIndex;
     private int upperBoundIndex;
     private List<DatasetChangeListener> changeListeners;
 
-    public StockDataPerTickRTAdapter(StockDataPerTick stockDataPerTick) {
-        this.stockDataPerTick = stockDataPerTick;
+    public StockDataPerTickRTAdapter() {
+        this.stockDataPerTick = null;
 
         // The fictive time at which the program starts
-        this.currentTime = new Date(43200000); // 13:00pm
-
+        this.currentTime = 43200000; // 13:00pm
         this.range = 600000; // 10 minutes by default
-
-        this.upperBoundIndex = indexForTime(this.currentTime);
-        // -1 so that one point is outside left side of screen
-        this.lowerBoundIndex = indexForTime(new Date(this.currentTime.getTime() - range)) - 1;
 
         this.changeListeners = new ArrayList<>();
     }
 
     /* Needs to be called once every second */
     public void update() {
-        this.currentTime.setTime(this.currentTime.getTime() + 1000); // increment second
+        this.currentTime += 1000; // increment second
 
-        boolean datasetChanged = false;
-        // Change indexes depending on current time
-        Date lowerBoundTime = new Date(this.currentTime.getTime() - range);
-        if (lowerBoundIndex < stockDataPerTick.getNumTicks() && stockDataPerTick.getTime(lowerBoundIndex + 1).before(lowerBoundTime)) {
-            lowerBoundIndex++;
-            datasetChanged = true;
-        }
+        if (this.stockDataPerTick != null) {
+            boolean datasetChanged = false;
+            // Change indexes depending on current time
+            if (lowerBoundIndex < stockDataPerTick.getNumTicks() && stockDataPerTick.getTime(lowerBoundIndex + 1).getTime() < this.currentTime - this.range) {
+                lowerBoundIndex++;
+                datasetChanged = true;
+            }
 
-        if (upperBoundIndex < stockDataPerTick.getNumTicks() && stockDataPerTick.getTime(upperBoundIndex + 1).before(this.currentTime)) {
-            upperBoundIndex++;
-            datasetChanged = true;
-        }
+            if (upperBoundIndex < stockDataPerTick.getNumTicks() && stockDataPerTick.getTime(upperBoundIndex + 1).getTime() < this.currentTime) {
+                upperBoundIndex++;
+                datasetChanged = true;
+            }
 
-        // Notify change listeners
-        if (datasetChanged) {
-            this.notifyListeners();
+            // Notify change listeners
+            if (datasetChanged) {
+                this.notifyListeners();
+            }
         }
     }
 
-    public Date getCurrentTime() {
-        return this.currentTime;
+    public void changeStock(StockDataPerTick stockDataPerTick) {
+        this.stockDataPerTick = stockDataPerTick;
+        if (stockDataPerTick != null) {
+            this.upperBoundIndex = indexForTime(this.currentTime);
+            // -1 so that one point is outside left side of screen
+            this.lowerBoundIndex = indexForTime(this.currentTime - this.range) - 1;
+            this.notifyListeners(); // notify data changed
+        }
     }
 
     public void setRange(long range) {
         this.range = range;
-        // Update lower bound
-        this.lowerBoundIndex = indexForTime(new Date(this.currentTime.getTime() - range)) - 1;
-        this.notifyListeners();
+        if (this.stockDataPerTick != null) {
+            // Update lower bound
+            this.lowerBoundIndex = indexForTime(this.currentTime - range);
+            this.notifyListeners();
+        }
     }
 
-    private int indexForTime(Date time) {
+    private int indexForTime(long time) {
         int index;
         for (index = 0; index < stockDataPerTick.getNumTicks()
-                && stockDataPerTick.getTime(index).before(time); index++)
+                && stockDataPerTick.getTime(index).getTime() < time; index++)
             ;
         if (index > 0)
             return index - 1;
@@ -97,7 +100,7 @@ public class StockDataPerTickRTAdapter implements XYDataset {
     public int getItemCount(int i) {
         if (i == 0)
             return this.upperBoundIndex - lowerBoundIndex + 1; // dynamic
-        else // if i == 1
+        else // if i == 0
             return 3;
     }
 
@@ -110,18 +113,16 @@ public class StockDataPerTickRTAdapter implements XYDataset {
     public double getXValue(int i, int i1) {
         if (i == 0)
             if (i1 == this.upperBoundIndex - lowerBoundIndex) // last item
-                return this.currentTime.getTime();
+                return this.currentTime;
             else
                 return (double) this.stockDataPerTick.getTime(i1 + lowerBoundIndex).getTime();
         else { // current price line
-            double xLineStart = this.stockDataPerTick.getTime(lowerBoundIndex).getTime();
-            double xLineEnd = this.stockDataPerTick.getTime(upperBoundIndex).getTime();
             if (i1 == 0)
-                return xLineStart;
+                return this.currentTime;
             else if (i1 == 1)
-                return xLineStart + (xLineEnd - xLineStart) * 0.1; // right of line start
+                return this.currentTime - 0.9 * this.range;
             else // if i1 == 2
-                return xLineEnd;
+                return this.currentTime - this.range;
         }
     }
 
@@ -144,7 +145,10 @@ public class StockDataPerTickRTAdapter implements XYDataset {
 
     @Override
     public int getSeriesCount() {
-        return 2;
+        if (this.stockDataPerTick != null)
+            return 2;
+        else
+            return 0;
     }
 
     @Override

@@ -31,9 +31,10 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     /**
      * Adds a stock.
+     *
      * @param stockDataPerDay
      */
-    public void add(String stockSymbol, StockDataPerDay stockDataPerDay){
+    public void add(String stockSymbol, StockDataPerDay stockDataPerDay) {
         if (!this.stocks.containsKey(stockSymbol)) {
             this.stocks.put(stockSymbol, stockDataPerDay);
             notifyChangeListeners();
@@ -42,9 +43,10 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     /**
      * Sets focus on a stock.
+     *
      * @param stockSymbol
      */
-    public void setFocus(String stockSymbol){
+    public void setFocus(String stockSymbol) {
         // Put focussed stock on series 0
         if (this.visibleStocks.contains(stockSymbol))
             this.visibleStocks.remove(stockSymbol);
@@ -54,9 +56,10 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     /**
      * Shows a stock.
+     *
      * @param stockSymbol
      */
-    public void show(String stockSymbol){
+    public void show(String stockSymbol) {
         if (!this.visibleStocks.contains(stockSymbol)) {
             this.visibleStocks.add(stockSymbol);
             notifyChangeListeners();
@@ -65,9 +68,10 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     /**
      * Hides a stock.
+     *
      * @param stockSymbol
      */
-    public void hide(String stockSymbol){
+    public void hide(String stockSymbol) {
         if (this.visibleStocks.contains(stockSymbol)) {
             this.visibleStocks.remove(stockSymbol);
             notifyChangeListeners();
@@ -77,7 +81,7 @@ public class StockDataPerDayAdapter implements OHLCDataset {
     /**
      * Shows all stocks.
      */
-    public void showAll(){
+    public void showAll() {
         this.visibleStocks.addAll(this.stocks.keySet());
         notifyChangeListeners();
     }
@@ -85,16 +89,16 @@ public class StockDataPerDayAdapter implements OHLCDataset {
     /**
      * Hides all stocks.
      */
-    public void hideAll(){
+    public void hideAll() {
         this.visibleStocks.clear();
         notifyChangeListeners();
     }
 
-    public void setPeriod(String period){
+    public void setPeriod(String period) {
         notifyChangeListeners();
     }
 
-    private void notifyChangeListeners(){
+    private void notifyChangeListeners() {
         for (DatasetChangeListener changeListener : this.changeListeners) {
             changeListener.datasetChanged(new DatasetChangeEvent(this, this));
         }
@@ -108,7 +112,7 @@ public class StockDataPerDayAdapter implements OHLCDataset {
     @Override
     public double getHighValue(int i, int i1) {
 //        if (this.period == TimeUnit.DAYS) {
-            return this.stocks.get(this.visibleStocks.get(i)).getHighPrice(i1);
+        return this.stocks.get(this.visibleStocks.get(i)).getHighPrice(i1);
 //        } else if (this.period == TimeUnit.){
 //
 //        }
@@ -121,7 +125,7 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     @Override
     public double getLowValue(int i, int i1) {
-            return this.stocks.get(this.visibleStocks.get(i)).getLowPrice(i1);
+        return this.stocks.get(this.visibleStocks.get(i)).getLowPrice(i1);
     }
 
     @Override
@@ -131,7 +135,7 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     @Override
     public double getOpenValue(int i, int i1) {
-            return this.stocks.get(this.visibleStocks.get(i)).getOpenPrice(i1);
+        return this.stocks.get(this.visibleStocks.get(i)).getOpenPrice(i1);
     }
 
     @Override
@@ -141,7 +145,7 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     @Override
     public double getCloseValue(int i, int i1) {
-            return this.stocks.get(this.visibleStocks.get(i)).getClosePrice(i1);
+        return this.stocks.get(this.visibleStocks.get(i)).getClosePrice(i1);
     }
 
     @Override
@@ -151,7 +155,7 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     @Override
     public double getVolumeValue(int i, int i1) {
-            return this.stocks.get(this.visibleStocks.get(i)).getVolume(i1);
+        return this.stocks.get(this.visibleStocks.get(i)).getVolume(i1);
     }
 
     @Override
@@ -161,7 +165,7 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     @Override
     public int getItemCount(int i) {
-            return this.stocks.get(this.visibleStocks.get(i)).numDays();
+        return this.stocks.get(this.visibleStocks.get(i)).numDays();
     }
 
     @Override
@@ -171,7 +175,7 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     @Override
     public double getXValue(int i, int i1) {
-            return (double) this.stocks.get(this.visibleStocks.get(i)).getDate(i1).getTime();
+        return (double) this.stocks.get(this.visibleStocks.get(i)).getDate(i1).getTime();
     }
 
     @Override
@@ -186,12 +190,12 @@ public class StockDataPerDayAdapter implements OHLCDataset {
 
     @Override
     public int getSeriesCount() {
-            return this.visibleStocks.size();
+        return this.visibleStocks.size();
     }
 
     @Override
     public Comparable getSeriesKey(int i) {
-            return this.visibleStocks.get(i);
+        return this.visibleStocks.get(i);
     }
 
     @Override

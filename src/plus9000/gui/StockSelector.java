@@ -31,7 +31,7 @@ public class StockSelector extends TabPane {
         this.stockData = stockData;
         this.listeners = new ArrayList<>();
 
-        this.setMinWidth(470);
+        this.setMinWidth(400);
 
         List<String> exchanges = this.stockData.getExhanges();
         for (String exchange : exchanges) {
@@ -188,6 +188,19 @@ class StockListCell extends ListCell<StockListItem> {
             }
         });
 
+        // Day/tick data available indicator
+        Text dataAvailableText;
+        if (stockListItem.hasDay)
+            if (stockListItem.hasTick)
+                dataAvailableText = new Text("   [d/t]");
+            else
+                dataAvailableText = new Text("   [d]");
+        else if (stockListItem.hasTick)
+            dataAvailableText = new Text("   [t]");
+        else
+            dataAvailableText = new Text("   []");
+        dataAvailableText.setFill(Color.DARKGRAY);
+
         // Cell
         this.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -216,17 +229,21 @@ class StockListCell extends ListCell<StockListItem> {
             }
         });
 
-        double change = Double.parseDouble(stockListItem.change);
+        double change = Double.parseDouble(stockListItem.changePer);
 
         // Indicator
         Shape indicator;
-        Text indicatorText = new Text(stockListItem.change + "  ");
+        Text indicatorText;
+        if (change > 0)
+            indicatorText = new Text("+" + stockListItem.change + "%  ");
+        else
+            indicatorText = new Text(stockListItem.change + "%  ");
         if (change > 0) {
-            indicator = new Polygon(0.0, -5.0, 5.0, 0.0, 10.0, -5.0);
+            indicator = new Polygon(0.0, -5.0, 5.0, -10.0, 10.0, -5.0);
             indicator.setFill(Color.GREEN);
             indicatorText.setFill(Color.GREEN);
         } else if (change < 0) {
-            indicator = new Polygon(0.0, -5.0, 5.0, -10.0, 10.0, -5.0);
+            indicator = new Polygon(0.0, -5.0, 5.0, 0.0, 10.0, -5.0);
             indicator.setFill(Color.RED);
             indicatorText.setFill(Color.RED);
         } else {
@@ -240,7 +257,7 @@ class StockListCell extends ListCell<StockListItem> {
 
         // HBox
         HBox hBox = new HBox();
-        hBox.getChildren().setAll(checkBox, space, indicatorText, indicator);
+        hBox.getChildren().setAll(checkBox, dataAvailableText, space, indicatorText, indicator);
         hBox.setAlignment(Pos.BASELINE_LEFT);
 
         setGraphic(hBox);

@@ -1,5 +1,7 @@
 package plus9000.data;
 
+import java.io.File;
+
 /**
  * Created by Martin on 20-Jan-17.
  */
@@ -14,6 +16,8 @@ public class Stock {
     public String change;
     public String changePer;
     public String volume;
+    public boolean hasDay;
+    public boolean hasTick;
 
     public Stock() {
     }
@@ -43,6 +47,13 @@ public class Stock {
         this.change = stock.change;
         this.changePer = stock.changePer;
         this.volume = stock.volume;
+        this.hasDay = stock.hasDay;
+        this.hasTick = stock.hasTick;
+    }
+
+    public void setDataAvailable() {
+        this.hasDay = new File(String.format("data/day/%s_%s.csv", this.exchange, this.symbol)).isFile();
+        this.hasTick = new File(String.format("data/tick/%s_%s.csv", this.exchange, this.symbol)).isFile();
     }
 
     public String toString() {

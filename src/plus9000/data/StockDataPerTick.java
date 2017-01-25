@@ -21,33 +21,48 @@ public class StockDataPerTick {
         this.stockDataPerTick = new OrderedHashMap<>();
     }
 
-    public void loadFromFile(String filePath) {
-        try {
-            File file = new File(filePath);
-            Scanner scanner = new Scanner(file);
-            scanner.useDelimiter(",|\\n");
-            scanner.useLocale(Locale.ENGLISH);
+    public static StockDataPerTick loadedFromFile(String symbol) {
+        StockDataPerTick stockDataPerTick = new StockDataPerTick();
+        boolean success = stockDataPerTick.loadFromFile(symbol);
+        if (success)
+            return stockDataPerTick;
+        else
+            return null;
+    }
 
-            scanner.nextLine(); // skip header
+    public boolean loadFromFile(String symbol) {
+        try {
+            File file = new File(String.format("data/tick/%s.csv", symbol.replace(':', '_')));
+            Scanner fileScanner = new Scanner(file);
+
+            fileScanner.nextLine(); // skip header
 
             DateFormat df = new SimpleDateFormat("kk:mm:ss", Locale.ENGLISH);
-            while (scanner.hasNextLine()) {
+
+            Scanner lineScanner = null;
+            while (fileScanner.hasNextLine()) {
                 try {
-                    scanner.next(); // ignore ticker
-                    scanner.next(); // ignore per
-                    scanner.next(); // ignore date
-                    Date time = df.parse(scanner.next());
-                    double price = scanner.nextDouble();
-                    scanner.next(); // ignore volume
+                    lineScanner = new Scanner(fileScanner.nextLine());
+                    lineScanner.useDelimiter(",");
+                    lineScanner.useLocale(Locale.ENGLISH);
+                    lineScanner.next(); // ignore ticker
+                    lineScanner.next(); // ignore per
+                    lineScanner.next(); // ignore date
+                    Date time = df.parse(lineScanner.next());
+                    double price = lineScanner.nextDouble();
+                    lineScanner.next(); // ignore volume
                     this.stockDataPerTick.put(time, price); // if there is already a price for time, then it is updated
+
                 } catch (NoSuchElementException | ParseException e) {
                     // ignore line
+                } finally {
+                    if (lineScanner != null) lineScanner.close();
                 }
             }
-            scanner.close();
-
+            fileScanner.close();
+            return true;
         } catch (FileNotFoundException e) {
-            // ignore file
+            return false;
         }
     }
 

@@ -43,7 +43,7 @@ public class OHLCDataCollection extends OHLCSeriesCollection {
 
     public void loadFromFile(String symbol) {
         OHLCData ohlcData = OHLCData.loadedFromFile(symbol);
-        if (!ohlcData.getPerDay().isEmpty()) {
+        if (ohlcData != null) {
             this.allSymbols.add(symbol);
             this.allSeriesPerDay.put(symbol, ohlcData.getPerDay());
             this.allSeriesPerWeek.put(symbol, ohlcData.getPerWeek());

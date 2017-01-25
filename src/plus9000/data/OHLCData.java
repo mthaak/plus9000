@@ -37,11 +37,9 @@ public class OHLCData {
         OHLCData stockData = new OHLCData(symbol);
         try {
             File file = new File(String.format("data/day/%s.csv", symbol.replace(':', '_'))); // file names cannot contain :
-            Scanner scanner = new Scanner(file);
-            scanner.useDelimiter(",|\\n");
-            scanner.useLocale(Locale.ENGLISH);
+            Scanner fileScanner = new Scanner(file);
 
-            scanner.nextLine(); // skip header
+            fileScanner.nextLine(); // skip header
 
             boolean firstLine = true;
 
@@ -56,14 +54,18 @@ public class OHLCData {
             Year year = new Year(new Date(0));
             double yearOpen = 0, yearHigh = Double.MIN_VALUE, yearLow = Double.MAX_VALUE, yearClose = 0;
 
-            while (scanner.hasNext()) {
+            Scanner lineScanner = null;
+            while (fileScanner.hasNextLine()) {
                 try {
-                    Date date = df.parse(scanner.next());
-                    double open = scanner.nextDouble();
-                    double high = scanner.nextDouble();
-                    double low = scanner.nextDouble();
-                    double close = scanner.nextDouble();
-                    int volume = scanner.nextInt(); // not used at the moment
+                    lineScanner = new Scanner(fileScanner.nextLine());
+                    lineScanner.useDelimiter(",");
+                    lineScanner.useLocale(Locale.ENGLISH);
+                    Date date = df.parse(lineScanner.next());
+                    double open = lineScanner.nextDouble();
+                    double high = lineScanner.nextDouble();
+                    double low = lineScanner.nextDouble();
+                    double close = lineScanner.nextDouble();
+                    int volume = lineScanner.nextInt(); // not used at the moment
 
                     // Day
                     OHLCItem dayOhlc = new OHLCItem(new Day(date), open, high, low, close);
@@ -127,6 +129,8 @@ public class OHLCData {
 
                 } catch (ParseException | InputMismatchException e) {
                     // ignore data
+                } finally {
+                    if (lineScanner != null) lineScanner.close();
                 }
             }
 
@@ -138,10 +142,10 @@ public class OHLCData {
             OHLCItem yearOhlc = new OHLCItem(year, yearOpen, yearHigh, yearLow, yearClose);
             stockData.getPerYear().add(yearOhlc);
 
-            scanner.close();
+            fileScanner.close();
 
         } catch (FileNotFoundException e) {
-            // Ignore
+            return null;
         }
         return stockData;
     }

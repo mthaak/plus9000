@@ -2,10 +2,7 @@ package plus9000.gui;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.DateTickUnit;
-import org.jfree.chart.axis.DateTickUnitType;
-import org.jfree.chart.axis.TickUnits;
+import org.jfree.chart.axis.*;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import plus9000.data.OHLCDataCollection;
@@ -104,8 +101,9 @@ public class CandlestickChart {
         }
 
         // Force auto update
-        this.chart.getXYPlot().getRangeAxis().setAutoRange(false);
-        this.chart.getXYPlot().getRangeAxis().setAutoRange(true);
+        ValueAxis rangeAxis = this.chart.getXYPlot().getRangeAxis();
+        rangeAxis.setAutoRange(false);
+        rangeAxis.setAutoRange(true);
     }
 
     public void seeAll() {
@@ -113,8 +111,9 @@ public class CandlestickChart {
         dateAxis.setRange(new Date(110, 0, 1), new Date(117, 0, 1)); // show all dates
 
         // Force auto update
-        this.chart.getXYPlot().getRangeAxis().setAutoRange(false);
-        this.chart.getXYPlot().getRangeAxis().setAutoRange(true);
+        ValueAxis rangeAxis = this.chart.getXYPlot().getRangeAxis();
+        rangeAxis.setAutoRange(false);
+        rangeAxis.setAutoRange(true);
     }
 
     private void setUnitsAndFormat() {

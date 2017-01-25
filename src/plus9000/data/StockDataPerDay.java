@@ -21,6 +21,12 @@ public class StockDataPerDay {
         this.stockDataPerDay = new OrderedHashMap<>();
     }
 
+    public static StockDataPerDay loadedFromFile(String filePath) {
+        StockDataPerDay stockDataPerDay = new StockDataPerDay();
+        stockDataPerDay.loadFromFile(filePath);
+        return stockDataPerDay;
+    }
+
     public void loadFromFile(String filePath) {
         File file = new File(filePath);
         try {
@@ -46,12 +52,6 @@ public class StockDataPerDay {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public static StockDataPerDay loadedFromFile(String filePath){
-        StockDataPerDay stockDataPerDay = new StockDataPerDay();
-        stockDataPerDay.loadFromFile(filePath);
-        return stockDataPerDay;
     }
 
     public int numDays() {
@@ -106,6 +106,7 @@ public class StockDataPerDay {
 class DataOfDay {
     public double openPrice, highPrice, lowPrice, closePrice;
     public int volume;
+
     public DataOfDay(double openPrice, double highPrice, double lowPrice, double closePrice, int volume) {
         this.openPrice = openPrice;
         this.highPrice = highPrice;
