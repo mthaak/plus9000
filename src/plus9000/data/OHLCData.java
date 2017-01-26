@@ -76,7 +76,7 @@ public class OHLCData {
                     if (dateWeek.equals(week)) {
                         weekHigh = Math.max(weekHigh, high);
                         weekLow = Math.min(weekLow, low);
-                        weekClose = close;
+                        weekOpen = open; // since we are going back in time
                     } else {
                         if (!firstLine) {
                             OHLCItem weekOhlc = new OHLCItem(week, weekOpen, weekHigh, weekLow, weekClose);
@@ -94,7 +94,7 @@ public class OHLCData {
                     if (dateMonth.equals(month)) {
                         monthHigh = Math.max(monthHigh, high);
                         monthLow = Math.min(monthLow, low);
-                        monthClose = close;
+                        monthOpen = open; // since we are going back in time
                     } else {
                         if (!firstLine) {
                             OHLCItem monthOhlc = new OHLCItem(month, monthOpen, monthHigh, monthLow, monthClose);
@@ -112,7 +112,7 @@ public class OHLCData {
                     if (dateYear.equals(year)) {
                         yearHigh = Math.max(yearHigh, high);
                         yearLow = Math.min(yearLow, low);
-                        yearClose = close;
+                        yearOpen = open; // since we are going back in time
                     } else {
                         if (!firstLine) {
                             OHLCItem yearOhlc = new OHLCItem(year, yearOpen, yearHigh, yearLow, yearClose);
