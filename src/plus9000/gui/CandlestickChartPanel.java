@@ -87,8 +87,8 @@ public class CandlestickChartPanel extends VBox implements StockSelectorListener
     }
 
     @Override
-    public void stockUnfocused() {
-        this.candlestickChart.unfocus();
+    public void stockUnfocused(String symbol, boolean uncheck) {
+        this.candlestickChart.unfocus(symbol, uncheck);
     }
 
     @Override

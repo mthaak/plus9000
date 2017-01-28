@@ -40,7 +40,7 @@ public class WorldChartPanel extends TitledPane implements StockSelectorListener
     }
 
     @Override
-    public void stockUnfocused() {
+    public void stockUnfocused(String symbol, boolean uncheck) {
         // Do nothing
     }
 

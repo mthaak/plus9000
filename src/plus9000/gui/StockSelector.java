@@ -26,10 +26,12 @@ import java.util.List;
 public class StockSelector extends TabPane {
     StockData stockData;
     List<StockSelectorListener> listeners;
+    List<StockListItem> allStockListItems;
 
     public StockSelector(StockData stockData) {
         this.stockData = stockData;
         this.listeners = new ArrayList<>();
+        allStockListItems = new ArrayList<>();
 
         this.setMinWidth(400);
 
@@ -38,7 +40,9 @@ public class StockSelector extends TabPane {
             List<StockListItem> stockListItems = new ArrayList<>();
             List<Stock> stocks = this.stockData.getStocksOfExchange(exchange);
             for (Stock stock : stocks) {
-                stockListItems.add(new StockListItem(stock, false, false));
+                StockListItem stockListItem = new StockListItem(stock, false, false);
+                stockListItems.add(stockListItem);
+                allStockListItems.add(stockListItem);
             }
 
             // ListView
@@ -46,25 +50,13 @@ public class StockSelector extends TabPane {
             listView.setItems(FXCollections.observableArrayList(stockListItems));
             listView.setStyle("-fx-background-color:transparent;"); // remove border
             listView.setCellFactory(param -> new StockListCell(this));
-            // Set stock focused listener
-            listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<StockListItem>() {
-                @Override
-                public void changed(ObservableValue<? extends StockListItem> observableValue, StockListItem prevFocusedStock, StockListItem newFocusedStock) {
-                    if (prevFocusedStock != null && !prevFocusedStock.isChecked()) {
-                        notifyListenersStockUnchecked(prevFocusedStock.symbol);
-                    }
-                    // Check and focus
-                    notifyListenersStockChecked(newFocusedStock.symbol); // even if it's not actually checked
-                    notifyListenersStockFocused(newFocusedStock.symbol);
-                }
-            });
 
             // Button
             Button hideAllButton = new Button("Clear all");
             hideAllButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    for (StockListItem stock : stockListItems)
+                    for (StockListItem stock : allStockListItems)
                         stock.getCheckedProperty().setValue(false);
                     notifyListenersAllStocksUnchecked();
                 }
@@ -101,9 +93,9 @@ public class StockSelector extends TabPane {
             listener.stockFocused(symbol);
     }
 
-    public void notifyListenersStockUnfocused() {
+    public void notifyListenersStockUnfocused(String symbol, boolean uncheck) {
         for (StockSelectorListener listener : this.listeners)
-            listener.stockUnfocused();
+            listener.stockUnfocused(symbol, uncheck);
     }
 
     public void notifyListenersStockChecked(String symbol) {
@@ -208,7 +200,6 @@ class StockListCell extends ListCell<StockListItem> {
                 checkBox.requestFocus(); // so checkbox is already focused when you enter the cell
                 stockListItem.oldBackground = getBackground();
                 setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-                stockSelector.notifyListenersStockChecked(stockListItem.getFullSymbol());
                 stockSelector.notifyListenersStockFocused(stockListItem.getFullSymbol());
             }
         });
@@ -216,9 +207,7 @@ class StockListCell extends ListCell<StockListItem> {
             @Override
             public void handle(MouseEvent event) {
                 setBackground(stockListItem.oldBackground);
-                if (!stockListItem.isChecked())
-                    stockSelector.notifyListenersStockUnchecked(stockListItem.getFullSymbol());
-                stockSelector.notifyListenersStockUnfocused();
+                stockSelector.notifyListenersStockUnfocused(stockListItem.getFullSymbol(), !stockListItem.isChecked());
             }
         });
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {

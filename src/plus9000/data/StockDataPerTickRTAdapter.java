@@ -58,9 +58,11 @@ public class StockDataPerTickRTAdapter implements XYDataset {
     public void changeStock(StockDataPerTick stockDataPerTick) {
         this.stockDataPerTick = stockDataPerTick;
         if (stockDataPerTick != null) {
-            this.upperBoundIndex = indexForTime(this.currentTime);
             // -1 so that one point is outside left side of screen
-            this.lowerBoundIndex = indexForTime(this.currentTime - this.range) - 1;
+            this.lowerBoundIndex = indexForTime(this.currentTime - this.range, 0) - 1;
+
+            this.upperBoundIndex = indexForTime(this.currentTime, lowerBoundIndex);
+
             this.notifyListeners(); // notify data changed
         }
     }
@@ -69,14 +71,14 @@ public class StockDataPerTickRTAdapter implements XYDataset {
         this.range = range;
         if (this.stockDataPerTick != null) {
             // Update lower bound
-            this.lowerBoundIndex = indexForTime(this.currentTime - range);
+            this.lowerBoundIndex = indexForTime(this.currentTime - range, 0);
             this.notifyListeners();
         }
     }
 
-    private int indexForTime(long time) {
+    private int indexForTime(long time, int startIndex) {
         int index;
-        for (index = 0; index < stockDataPerTick.getNumTicks()
+        for (index = startIndex; index < stockDataPerTick.getNumTicks()
                 && stockDataPerTick.getTime(index).getTime() < time; index++)
             ;
         if (index > 0)

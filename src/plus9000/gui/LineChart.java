@@ -85,7 +85,7 @@ public class LineChart {
     }
 
     public void showStock(String symbol) {
-        if (this.currentSymbol == null && this.stocks.containsKey(symbol)) {
+        if (this.stocks.containsKey(symbol)) {
             this.currentSymbol = symbol;
             this.range = 600000; // reset range
             this.dataset.setRange(this.range);

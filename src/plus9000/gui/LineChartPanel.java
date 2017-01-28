@@ -15,7 +15,7 @@ import java.util.TimerTask;
  */
 public class LineChartPanel extends VBox implements StockSelectorListener {
     private LineChart lineChart;
-    private int stocksChecked = 0;
+    private String checkedStock = "";
 
     public LineChartPanel(StockData stockData) {
         this.lineChart = new LineChart(stockData);
@@ -50,27 +50,28 @@ public class LineChartPanel extends VBox implements StockSelectorListener {
 
     @Override
     public void stockFocused(String symbol) {
-        if (this.stocksChecked == 0)
-            this.lineChart.showStock(symbol);
+        // Do nothing
     }
 
     @Override
-    public void stockUnfocused() {
+    public void stockUnfocused(String symbol, boolean uncheck) {
         // Do nothing
     }
 
     @Override
     public void stockChecked(String symbol) {
-        this.stocksChecked++;
-        if (this.stocksChecked == 1) // only show first checked
+        if (this.checkedStock.equals("")) {
+            this.checkedStock = symbol;
             this.lineChart.showStock(symbol);
+        }
     }
 
     @Override
     public void stockUnchecked(String symbol) {
-        this.stocksChecked--;
-        if (this.stocksChecked == 0)
+        if (this.checkedStock.equals(symbol)) {
+            this.checkedStock = "";
             this.lineChart.hideStock();
+        }
     }
 
     @Override
@@ -80,7 +81,8 @@ public class LineChartPanel extends VBox implements StockSelectorListener {
 
     @Override
     public void allStocksUnchecked() {
-        // Do nothing
+        this.checkedStock = "";
+        this.lineChart.hideStock();
     }
 
     @Override

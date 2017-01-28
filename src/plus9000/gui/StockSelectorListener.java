@@ -7,7 +7,7 @@ package plus9000.gui;
 public interface StockSelectorListener {
     void stockFocused(String symbol);
 
-    void stockUnfocused();
+    void stockUnfocused(String symbol, boolean uncheck);
 
     void stockChecked(String symbol);
 

@@ -41,9 +41,10 @@ public class CandlestickChart {
     }
 
     public void setFocus(String symbol) {
+        this.show(symbol); // show symbol if it wasn't already
+
         int index = this.dataset.indexOf(symbol);
         if (index != -1) {
-
             // Restore paint of previous focused
             CandlestickRenderer renderer = (CandlestickRenderer) this.chart.getXYPlot().getRenderer();
             if (this.hasFocus) {
@@ -56,7 +57,10 @@ public class CandlestickChart {
         }
     }
 
-    public void unfocus() {
+    public void unfocus(String symbol, boolean uncheck) {
+        if (uncheck) {
+            this.dataset.exclude(symbol);
+        }
         XYItemRenderer renderer = this.chart.getXYPlot().getRenderer();
         if (this.hasFocus) {
             renderer.setSeriesPaint(this.focusedSeries, this.beforeFocusPaint);
